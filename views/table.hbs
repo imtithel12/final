@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Interface</title>
+    <style>
+        /* Ajoutez vos styles CSS ici */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .data-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Data Interface</h1>
+        <div class="data-container">
+            {{#each interactions}}
+            <div class="data-item">
+                <p>Interaction ID: {{this.page}}</p>
+                <p>Timestamp: {{this.duration}}</p>
+                <p>Details: {{this.url}}</p>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</body>
+
+</html>

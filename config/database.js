@@ -10,6 +10,7 @@ const db = mysql.createConnection({
     database: process.env.DATABASE
 });
 
+
 db.connect((error) => {
     if (error) {
         console.log(error);
@@ -18,4 +19,31 @@ db.connect((error) => {
     }
 });
 
+
+// Définissez la fonction getAllClients pour récupérer tous les clients
+// const getAllClients = (callback) => {
+//     db.query('SELECT * FROM clients', (err, results) => {
+//         if (err) {
+//             callback(err, null);
+//         } else {
+//             callback(null, results);
+//         }
+//     });
+// };
+
+const getAllClients = (callback) => {
+    db.query('SELECT clients.*, COUNT(urls.id) AS urlCount FROM clients LEFT JOIN urls ON clients.id = urls.client_id GROUP BY clients.id', (err, results) => {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+    });
+};
+
+
+
+
 module.exports = db;
+module.exports.getAllClients = getAllClients;
+

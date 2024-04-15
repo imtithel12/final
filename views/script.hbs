@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="userActivityTracker.js" type='text/javascript'></script>
+    <style>
+        @import'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css';
+        @import'https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js';
+        @import'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js';
+        @import'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css';
+        @import'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js';
+        @import'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js';
+        @import'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css';
+        @import'https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css';
+
+        body {
+            background-color: #f7c9f721;
+            font-family: sans-serif;
+
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .buttonl {
+            text-decoration: none;
+        }
+
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 2px -2px rgba(128, 128, 128, 0.808);
+            padding-bottom: 0px;
+        }
+
+        .desc {
+            margin-top: 10%;
+            margin-left: 2%;
+        }
+
+        .text1 {
+            color: #DA70D6;
+            font-weight: 700;
+        }
+
+        .detail {
+            color: #a4adb8;
+        }
+
+        .accuiel {
+            position: absolute;
+            top: 40%;
+            width: 40%;
+            margin-left: 55%;
+            margin-top: calc(-10%);
+        }
+
+        .bbb-wrapper {
+            margin-left: 2.5%;
+
+        }
+
+        .enteremail {
+            width: 30%;
+            height: 48px;
+            border: none;
+            outline: none;
+            padding: 0 10px;
+            border-style: outset;
+            border-radius: 5px;
+            border-color: rgba(0, 0, 0, 0.226);
+            margin-left: 11.5%;
+        }
+
+        .subscribe-button {
+            height: 48px;
+            padding: 0 30px;
+            border-radius: 5px;
+            border: none;
+            position: absolute;
+            font-size: 15px;
+            color: #fff;
+            cursor: pointer;
+            background: #ffd900b7;
+            margin-left: 0.5%;
+        }
+
+        #subscribe-button:hover {
+            background: #ffd900cb;
+            color: #fff;
+        }
+
+        .url {
+            position: absolute;
+            margin-left: 50%;
+            margin-top: calc(-5%);
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////
+
+        #content {
+            border: solid blue;
+        }
+
+        #content {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: white;
+            border-radius: 5px;
+            border: 1px solid gray;
+            margin-top: 1%;
+            width: 80%;
+        }
+
+        #content2 {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: white;
+            border-radius: 5px;
+            border: 1px solid gray;
+            margin-top: 1%;
+            width: 60%;
+        }
+
+        textarea {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: calc(-12%);
+            padding: 0;
+        }
+
+        h2 {
+            color: #f4c414;
+            text-align: center;
+        }
+
+        #buttonn {
+            margin-left: 45%;
+            border-radius: 5px;
+            border-color: #f4c414;
+            background-color: #f4c414;
+            padding: 8px;
+            text-decoration: none;
+        }
+
+        .script {
+            width: 10%;
+            height: 10%;
+
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .copie {
+            margin-left: 5%;
+        }
+
+        .copie2 {
+            margin-left: 17%;
+        }
+
+        .idtrack {
+            border-radius: 5px;
+            border: 1px solid #f506f5;
+            background-color: #f3d4f3;
+            padding: 5px;
+            width: 80%;
+
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .logow {
+            background-color: white;
+            box-shadow: 0 2px 2px -2px rgba(128, 128, 128, 0.808);
+        }
+
+        .logo {
+            margin-left: 1%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="logow">
+        <a href="/" class="navbar-brand"><img class="logo" width="18%" src="./img/logo.png"></a>
+    </div>
+
+    <div id="content">
+
+        <img src="./img/script.gif" class="script">
+        <h2>Insert the Code on Your Website</h2>
+
+        <div id="content2">
+            <h6 class="copie">
+                Copiez le code suivant et collez-le dans chaque page (ou dans le modèle principal)
+            </h6>
+            <h6 class="copie2">
+                de votre site Web juste avant la balise de fermeture <b>&lt;/body&gt;</b>
+            </h6>
+            <h6 class="idtrack">
+                YOUR_TRACKING_ID = <b>{{trackingId}}</b>
+            </h6>
+            <div class="desc py-4 align-items-center">
+
+                <textarea rows="10" cols="70" readonly="">
+                <script>
+                    var urlParams = new URLSearchParams(window.location.search);
+                    var trackingId = urlParams.get('trackingId');
+                    if (!trackingId) {
+                        trackingId = "YOUR_TRACKING_ID_HERE";
+                    }
+
+                    var startTime = Math.floor(new Date().getTime() / 1000);
+
+                    function sendData(data) {
+                        data.tracking_id = trackingId;
+                        fetch('http://localhost:3008/api/track-interaction', {
+                            method: 'POST',
+                            mode: 'cors',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                console.log('Data sent successfully:', data);
+                            })
+                            .catch(error => {
+                                console.error('Error sending data:', error);
+                            });
+                    }
+
+                    window.addEventListener('load', function () {
+                        var endTime = Math.floor(new Date().getTime() / 1000);
+                        var visitDuration = endTime - startTime;
+
+                        sendData({ event_type: 'visit', page: window.location.href, duration: visitDuration });
+                    });
+
+                    window.addEventListener('beforeunload', function () {
+                        var endTime = Math.floor(new Date().getTime() / 1000);
+                        var visitDuration = endTime - startTime;
+
+                        sendData({ event_type: 'leave', page: window.location.href, duration: visitDuration });
+                    });
+
+                    document.querySelectorAll('a').forEach(function (link) {
+                        link.addEventListener('click', function () {
+                            sendData({ event_type: 'click', element: 'link', timestamp: Math.floor(new Date().getTime() / 1000), page: link.href });
+                        });
+                    });
+
+                    document.querySelectorAll('button').forEach(function (button) {
+                        button.addEventListener('click', function () {
+                            sendData({ event_type: 'click', element: 'button', timestamp: Math.floor(new Date().getTime() / 1000), page: window.location.href });
+                        });
+                    });
+                </script>
+            </textarea>
+            </div>
+
+
+            <a href="/projets" id="buttonn">
+                Continuer
+            </a>
+            <br><br>
+        </div>
+        <br>
+    </div>
+    <br>
+    <br>
+    <script>
+        // Stockage du trackingId extrait de l'URL
+        var urlParams = new URLSearchParams(window.location.search);
+        var trackingId = urlParams.get('trackingId');
+        if (!trackingId) {
+            // Si le trackingId n'est pas trouvé dans l'URL, utilisez un fallback ou demandez à l'utilisateur de le fournir
+            trackingId = "8e22796c-015e-4d73-8e93-8649f9b357e3"; // Fallback trackingId
+        }
+
+        // Stockage du timestamp de début de la visite
+        var startTime = Math.floor(new Date().getTime() / 1000);
+
+        function sendData(data) {
+            data.tracking_id = trackingId; // Ajouter le trackingId aux données envoyées
+            fetch('http://localhost:3008/api/track-interaction', {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Data sent successfully:', data);
+                })
+                .catch(error => {
+                    console.error('Error sending data:', error);
+                });
+        }
+
+        // Événement déclenché lorsqu'une page est chargée
+        window.addEventListener('load', function () {
+            // Calcul de la durée de la visite
+            var endTime = Math.floor(new Date().getTime() / 1000);
+            var visitDuration = endTime - startTime;
+
+            // Envoi des données de la visite
+            sendData({ event_type: 'visit', page: window.location.href, duration: visitDuration });
+        });
+
+        // Événement déclenché lorsqu'une page est quittée
+        window.addEventListener('beforeunload', function () {
+            // Calcul de la durée de la visite
+            var endTime = Math.floor(new Date().getTime() / 1000);
+            var visitDuration = endTime - startTime;
+
+            // Envoi des données de la visite
+            sendData({ event_type: 'leave', page: window.location.href, duration: visitDuration });
+        });
+
+        // Capturer les clics sur chaque lien dans le document
+        document.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                // Envoi des données du clic sur le lien avec l'élément spécifié comme "link"
+                sendData({ event_type: 'click', element: 'link', timestamp: Math.floor(new Date().getTime() / 1000), page: link.href });
+            });
+        });
+
+        // Capturer les clics sur chaque bouton dans le document
+        document.querySelectorAll('button').forEach(function (button) {
+            button.addEventListener('click', function () {
+                // Envoi des données du clic sur le bouton avec l'élément spécifié comme "button"
+                sendData({ event_type: 'click', element: 'button', timestamp: Math.floor(new Date().getTime() / 1000), page: window.location.href });
+            });
+        });
+    </script>
+</body>
+
+</html>

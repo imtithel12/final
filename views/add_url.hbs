@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="userActivityTracker.js" type='text/javascript'></script>
+    <style>
+        @import'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css';
+        @import'https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js';
+        @import'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js';
+        @import'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css';
+        @import'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js';
+        @import'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js';
+        @import'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css';
+        @import'https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css';
+
+        body {
+            background-color: white;
+            font-family: sans-serif;
+
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .buttonl {
+            text-decoration: none;
+        }
+
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 2px -2px rgba(128, 128, 128, 0.808);
+            padding-bottom: 0px;
+        }
+
+        .desc {
+            margin-top: 10%;
+            margin-left: 2%;
+        }
+
+        .text1 {
+            color: #DA70D6;
+            font-weight: 700;
+        }
+
+        .detail {
+            color: #a4adb8;
+        }
+
+        .accuiel {
+            position: absolute;
+            top: 40%;
+            width: 40%;
+            margin-left: 55%;
+            margin-top: calc(-10%);
+        }
+
+        .bbb-wrapper {
+            margin-left: 2.5%;
+
+        }
+
+        .titre {
+            width: 27%;
+            height: 40px;
+            border: none;
+            outline: none;
+            padding: 0 10px;
+            border-style: outset;
+            border-radius: 5px;
+            border-color: rgba(0, 0, 0, 0.226);
+            margin-left: 8%;
+        }
+
+        .enteremail {
+            width: 27%;
+            height: 40px;
+            border: none;
+            outline: none;
+            padding: 0 10px;
+            border-style: outset;
+            border-radius: 5px;
+            border-color: rgba(0, 0, 0, 0.226);
+            margin-left: 8%;
+        }
+
+        .subscribe-button {
+            width: 20%;
+            height: 48px;
+            padding: 0 30px;
+            border-radius: 5px;
+            border: none;
+            font-size: 15px;
+            color: #fff;
+            cursor: pointer;
+            background: #ffd900b7;
+            margin-left: 12%;
+        }
+
+        label {
+            margin-left: 8%;
+            color: rgb(71, 71, 71);
+        }
+
+        #subscribe-button:hover {
+            background: #ffd900cb;
+            color: #fff;
+        }
+
+        .url {
+            position: absolute;
+            margin-left: 50%;
+            margin-top: calc(-5%);
+        }
+
+        ///////////////////////////////////////////////////////////////////
+
+
+        .profile {
+            position: relative;
+            text-align: center;
+            margin-top: 60px
+        }
+
+        .username {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #DA70D6;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            background-color: #7c0678;
+            color: white;
+            font-size: 20px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            min-width: 160px;
+            z-index: 1;
+            transition: all 2s;
+            margin-bottom: 10%;
+        }
+
+        .dropdown-content a {
+            text-decoration: none;
+            display: block
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block
+        }
+
+        .profile ul {
+            background-color: #DA70D6;
+            width: 200px;
+            height: 230px;
+            border-radius: 10px;
+            right: 125px;
+            top: 7px;
+            position: absolute;
+            padding: 8px;
+            transition: all 0.5s;
+            z-index: 1;
+            margin-top: calc(-4%);
+        }
+
+        .profile ul::before {
+            content: '';
+            position: absolute;
+            background-color: #DA70D6;
+            height: 10px;
+            width: 10px;
+            top: -5px;
+            right: 10px;
+            transform: rotate(45deg)
+        }
+
+        .profile ul li {
+            list-style: none;
+            text-align: left;
+            font-size: 15px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            transition: all 0.5s;
+            cursor: pointer;
+            border-radius: 4px
+        }
+
+        .profile ul li:hover {
+            background-color: #7c0678;
+            border-radius: 4px
+        }
+
+        .profile ul li i {
+            margin-right: 7px
+        }
+
+        i {
+            color: white;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////
+    </style>
+
+</head>
+
+<body>
+    <nav id="mainNavbar" class="navbar navbar-expand-md py-0 fixed-top fixed-left bg-white">
+        <br><br><br><br>
+        <a href="/" class="navbar-brand"><img class="logo" width="18%" src="./img/logo.png"></a>
+        <div class="collapse navbar-collapse" id="navLinks">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">Contacts</a>
+                </li>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <li class="nav-item">
+                    <div class="dropdown">
+                        <div class="profile">
+                            <div class="username"><b>{{client.first_letter}}</b></div>
+                            <div class="dropdown-content">
+                                <ul>
+                                    <li>
+                                        <i class='bx bx-user'></i>
+                                        <span>
+                                            <form action="/projets" method="GET">
+                                                <button class="nav-link fw-bold py-1 px-0 btn p=3 text-white"
+                                                    type="submit">Projets</button>
+
+                                            </form>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <i class='bx bx-cog'></i>
+                                        <span>
+                                            <form action="/profile" method="Get">
+                                                <button class="nav-link fw-bold py-1 px-0 btn p=3 text-white"
+                                                    type="submit">Profile</button>
+
+                                            </form>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <i class='bx bx-cog'></i>
+                                        <span>
+                                            <form action="/logout" method="POST">
+                                                <button class="nav-link fw-bold py-1 px-0 btn p=3 text-white"
+                                                    type="submit">Help</button>
+
+                                            </form>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <i class='bx bx-log-in-circle'></i>
+                                        <span>
+                                            <form action="/logout" method="POST">
+                                                <button class="nav-link fw-bold py-1 px-0 btn p=3 text-white"
+                                                    type="submit">Logout</button>
+
+                                            </form>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <img src="./img/url.gif" class="url">
+
+    <div class="desc py-4 align-items-center">
+        <div class="card1 mt-3 p-3 g-2">
+            <div class="mt-3">
+                <h2 class="text1">Débutez à optimiser vos Sites Web <br>
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;
+                    et Applications.
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="bbb-wrapper">
+
+
+        <form action="/addurl" method="POST">
+            <label><b>Titre de projet:</b></label><br>
+            <input class="titre" name="titre" id="subscribe-email" placeholder="Mon Site Web" spellcheck="false"
+                type="text" required>
+            <br>
+            <br>
+            <label><b>URL de Site Web:</b></label><br>
+            <input class="enteremail" name="url" id="subscribe-email" placeholder="http://www.example.com"
+                spellcheck="false" type="text" required><br><br>
+
+            <button type="submit" id="subscribe-button" class="subscribe-button">
+                <i class="fa fa-rss"></i>
+                <b>Ajouter</b>
+            </button>
+        </form>
+    </div>
+
+    <br>
+    <p><b>{{ message }}</b></p>
+
+
+    <script>
+        // Stockage du trackingId extrait de l'URL
+        var urlParams = new URLSearchParams(window.location.search);
+        var trackingId = urlParams.get('trackingId');
+        if (!trackingId) {
+            // Si le trackingId n'est pas trouvé dans l'URL, utilisez un fallback ou demandez à l'utilisateur de le fournir
+            trackingId = "8e22796c-015e-4d73-8e93-8649f9b357e3"; // Fallback trackingId
+        }
+
+        // Stockage du timestamp de début de la visite
+        var startTime = Math.floor(new Date().getTime() / 1000);
+
+        function sendData(data) {
+            data.tracking_id = trackingId; // Ajouter le trackingId aux données envoyées
+            fetch('http://localhost:3008/api/track-interaction', {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Data sent successfully:', data);
+                })
+                .catch(error => {
+                    console.error('Error sending data:', error);
+                });
+        }
+
+        // Événement déclenché lorsqu'une page est chargée
+        window.addEventListener('load', function () {
+            // Calcul de la durée de la visite
+            var endTime = Math.floor(new Date().getTime() / 1000);
+            var visitDuration = endTime - startTime;
+
+            // Envoi des données de la visite
+            sendData({ event_type: 'visit', page: window.location.href, duration: visitDuration });
+        });
+
+        // Événement déclenché lorsqu'une page est quittée
+        window.addEventListener('beforeunload', function () {
+            // Calcul de la durée de la visite
+            var endTime = Math.floor(new Date().getTime() / 1000);
+            var visitDuration = endTime - startTime;
+
+            // Envoi des données de la visite
+            sendData({ event_type: 'leave', page: window.location.href, duration: visitDuration });
+        });
+
+        // Capturer les clics sur chaque lien dans le document
+        document.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                // Envoi des données du clic sur le lien avec l'élément spécifié comme "link"
+                sendData({ event_type: 'click', element: 'link', timestamp: Math.floor(new Date().getTime() / 1000), page: link.href });
+            });
+        });
+
+        // Capturer les clics sur chaque bouton dans le document
+        document.querySelectorAll('button').forEach(function (button) {
+            button.addEventListener('click', function () {
+                // Envoi des données du clic sur le bouton avec l'élément spécifié comme "button"
+                sendData({ event_type: 'click', element: 'button', timestamp: Math.floor(new Date().getTime() / 1000), page: window.location.href });
+            });
+        });
+    </script>
+</body>
+
+</html>

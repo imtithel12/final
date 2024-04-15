@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <style>
+        @import'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css';
+        @import'https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js';
+        @import'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js';
+        @import'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css';
+        @import'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js';
+        @import'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js';
+        @import'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css';
+        @import'https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css';
+
+        body {
+            background-color: white;
+            font-family: sans-serif;
+
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .buttonl {
+            text-decoration: none;
+        }
+
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 2px -2px rgba(128, 128, 128, 0.808);
+            padding-bottom: 0px;
+        }
+
+        .desc {
+            margin-top: 10%;
+            margin-left: 2%;
+        }
+
+        .text1 {
+            color: #DA70D6;
+            font-weight: 700;
+        }
+
+        .detail {
+            color: #a4adb8;
+        }
+
+        .accuiel {
+            position: absolute;
+            top: 40%;
+            width: 40%;
+            margin-left: 55%;
+            margin-top: calc(-10%);
+        }
+
+        .bbb-wrapper {
+            margin-left: 2.5%;
+
+        }
+
+        .enteremail {
+            width: 30%;
+            height: 48px;
+            border: none;
+            outline: none;
+            padding: 0 10px;
+            border-style: outset;
+            border-radius: 5px;
+            border-color: rgba(0, 0, 0, 0.226);
+            margin-left: 11.5%;
+        }
+
+        .subscribe-button {
+            height: 48px;
+            padding: 0 30px;
+            border-radius: 5px;
+            border: none;
+            position: absolute;
+            font-size: 15px;
+            color: #fff;
+            cursor: pointer;
+            background: #ffd900b7;
+            margin-left: 0.5%;
+        }
+
+        #subscribe-button:hover {
+            background: #ffd900cb;
+            color: #fff;
+        }
+
+        .url {
+            position: absolute;
+            margin-left: 50%;
+            margin-top: calc(-5%);
+        }
+
+        ///////////////////////////////////////////////////////////////////
+
+
+        .profile {
+            position: relative;
+            text-align: center;
+            margin-top: 60px
+        }
+
+        .profileimg {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #DA70D6;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            min-width: 160px;
+            z-index: 1;
+            transition: all 2s;
+            margin-bottom: 10%;
+        }
+
+        .dropdown-content a {
+            text-decoration: none;
+            display: block
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block
+        }
+
+        .profile ul {
+            background-color: #e3bcf3;
+            width: 200px;
+            height: 230px;
+            border-radius: 10px;
+            right: 125px;
+            top: 7px;
+            position: absolute;
+            padding: 8px;
+            transition: all 0.5s;
+            z-index: 1;
+            margin-top: calc(-4%);
+        }
+
+        .profile ul::before {
+            content: '';
+            position: absolute;
+            background-color: #e3bcf3;
+            height: 10px;
+            width: 10px;
+            top: -5px;
+            right: 10px;
+            transform: rotate(45deg)
+        }
+
+        .profile ul li {
+            list-style: none;
+            text-align: left;
+            font-size: 15px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            transition: all 0.5s;
+            cursor: pointer;
+            border-radius: 4px
+        }
+
+        .profile ul li:hover {
+            background-color: #DA70D6;
+            border-radius: 4px
+        }
+
+        .profile ul li i {
+            margin-right: 7px
+        }
+
+        i {
+            color: white;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////
+
+        .block,
+        .card {
+            background: #fff;
+            margin-bottom: 1.5rem;
+        }
+
+        .avatar {
+            position: relative;
+            line-height: 1;
+            border-radius: 500px;
+            white-space: nowrap;
+            font-weight: 700;
+            border-radius: 100%;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -ms-flex-negative: 0;
+            flex-shrink: 0;
+            border-radius: 500px;
+        }
+
+        .avatar img {
+            border-radius: inherit;
+            width: 100%;
+        }
+
+        .gd-primary {
+            font-family: cursive;
+            color: rgb(54, 54, 54);
+            border-style: solid;
+            border-color: #DA70D6;
+        }
+
+        .profileimgg {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border-width: 1px;
+            border: 2px solid #DA70D6;
+            cursor: pointer;
+        }
+
+        .gd-success {
+            color: #fff;
+            border: none;
+            background: #31c971 linear-gradient(45deg, #31c971, #3dc931)
+        }
+
+        .gd-info {
+            color: #fff;
+            border: none;
+            background: #14bae4 linear-gradient(45deg, #14bae4, #14e4a6)
+        }
+
+        .gd-warning {
+            color: #fff;
+            border: none;
+            background: #f4c414 linear-gradient(45deg, #f4c414, #f45414)
+        }
+
+
+        .list {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .list-item {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+        }
+
+        .list-row .list-item {
+            -ms-flex-direction: row;
+            flex-direction: row;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+        .list-row .list-item>* {
+            padding-left: .625rem;
+            padding-right: .625rem
+        }
+
+        .no-wrap {
+            white-space: nowrap
+        }
+
+        .text-color {
+            color: #5e676f
+        }
+
+        .text-gd {
+            -webkit-background-clip: text;
+            -moz-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -moz-text-fill-color: transparent;
+            text-fill-color: transparent
+        }
+
+        .text-sm {
+            font-size: .825rem
+        }
+
+        .h-1x {
+            height: 1.25rem;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical
+        }
+
+
+        .w-48 {
+            width: 300px !important;
+            height: 300px !important
+        }
+
+
+        a:link {
+
+            text-decoration: none;
+        }
+
+        .edit {
+            width: 100%;
+            height: 30px;
+            border-radius: 6px;
+            background-color: #ffd900cb;
+        }
+
+        /////////////////////////////////////////////////////////////////////////////
+        p {
+            color: #DA70D6;
+            font: italic small-caps bold 16px/2 cursive;
+        }
+
+        p {
+            color: #DA70D6;
+            font: italic small-caps bold 16px/2 cursive;
+        }
+
+        #urlsblock {
+            position: absolute;
+            margin-top: calc(-65.5%);
+            margin-left: 30%;
+        }
+
+        #urltitre {
+            color: rgb(161, 159, 159);
+            font: italic small-caps bold 16px/2 cursive;
+        }
+
+        #urltitre:hover {
+            color: #DA70D6;
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////
+    </style>
+
+</head>
+
+<body>
+    <nav id="mainNavbar" class="navbar navbar-expand-md py-0 fixed-top fixed-left bg-white">
+        <br><br><br><br>
+        <a href="/" class="navbar-brand"><img class="logo" width="18%" src="./img/logo.png"></a>
+        <div class="collapse navbar-collapse" id="navLinks">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">Contacts</a>
+                </li>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <li class="nav-item">
+                    <div class="dropdown">
+                        <div class="profile">
+                            <img src="{{client.image}}" class="profileimg" style="max-width: 100px; max-height: 100px;">
+                            <div class="dropdown-content">
+                                <ul>
+                                    <li>
+                                        <i class='bx bx-user'></i>
+                                        <span>
+                                            <form action="/profile" method="GET">
+                                                <button class="nav-link fw-bold py-1 px-0 btn p=3 text-white"
+                                                    type="submit">Profile</button>
+
+                                            </form>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <i class='bx bx-cog'></i>
+                                        <span>
+                                            <form action="/logout" method="POST">
+                                                <button class="nav-link fw-bold py-1 px-0 btn p=3 text-white"
+                                                    type="submit">Setting</button>
+
+                                            </form>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <i class='bx bx-cog'></i>
+                                        <span>
+                                            <form action="/logout" method="POST">
+                                                <button class="nav-link fw-bold py-1 px-0 btn p=3 text-white"
+                                                    type="submit">Help</button>
+
+                                            </form>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <i class='bx bx-log-in-circle'></i>
+                                        <span>
+                                            <form action="/logout" method="POST">
+                                                <button class="nav-link fw-bold py-1 px-0 btn p=3 text-white"
+                                                    type="submit">Logout</button>
+
+                                            </form>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="desc py-4 align-items-center">
+        <div class="page-content page-container justify-content-center" id="page-content">
+            <div class="padding">
+                <div class="row">
+                    <div class=" ">
+                        <div class="list list-row block">
+                            <div class="list-item list-group-item d-flex justify-content-between align-content-center"
+                                data-id="7">
+                                <div>
+                                    <form action="/updateImageProfile" method="POST">
+                                        <img src="{{client.image}}" class="profileimgg"><br>
+                                        <input type="file" name="image" accept="image/*"><br>
+                                        <button type="submit">Envoyer</button>
+                                    </form>
+                                    <br>
+                                    <br>
+                                    <form action="/updateProfile" method="POST">
+                                        <div class="item-author text-color" data-abc="true">
+                                            <div class="item-except text-muted text-sm ">
+                                                Nom d'utilisateur:
+                                            </div>
+                                            <input type="text" id="username" name="username" value="{{client.username}}"
+                                                required>
+                                        </div><br>
+                                        <div class="item-except text-muted text-sm ">
+                                            Nom: <br><input type="text" id="nom" name="nom" value="{{client.nom}}"
+                                                required>
+                                        </div><br>
+                                        <div class="item-except text-muted text-sm ">
+                                            Prénom:<br>
+                                            <input type="text" id="prenom" name="prenom" value="{{client.prenom}}"
+                                                required>
+                                        </div><br>
+                                        <div class="item-except text-muted text-sm ">
+                                            Adresses e-mail: <br><input type="email" id="email" name="email"
+                                                value="{{client.email}}" required>
+                                        </div><br>
+                                        <div class="item-date text-muted text-sm d-none d-md-block">
+
+                                            <a href="/updateProfile" data-abc="true">
+
+                                                <button type="submit" class="edit">
+                                                    Mettre à jour
+                                                </button></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="urlsblock">
+        <div class="desc py-4 align-items-center">
+            <div class="page-content page-container justify-content-center" id="page-content">
+                <div class="padding">
+                    <div class="row">
+                        <div>
+                            <p id="liste">Liste des projets</p>
+                            <a href="/updateProfile">
+                                {{#each urls}}
+                                <div class="list list-row block">
+                                    <div class="list-item list-group-item d-flex justify-content-between align-content-center"
+                                        data-id="7">
+                                        <div>
+                                            <div id="urltitre">
+                                                {{url}}
+                                            </div>
+                                            <div class="item-date text-muted text-sm d-none d-md-block">
+                                                {{created_at}}
+                                            </div>
+                                            <!-- Ajout du bouton de suppression -->
+                                            <form action="/deleteUrl" method="POST">
+                                                <button type="submit" class="btn btn-danger">
+                                                    Supprimer
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div><br>
+                                {{/each}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,241 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" <meta
+        charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart.js Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="chart1.js"></script>
+    <script src="chart2.js"></script>
+    <script src="chart3.js"></script>
+    <script src="chart4.js"></script>
+    <script src="chart5.js"></script>
+    <script src="chart6.js"></script>
+    <script src="chart7.js"></script>
+    <script src="chart8.js"></script>
+    <script src="chart9.js"></script>
+</head>
+
+<body>
+    <script>
+        // Stockage du trackingId extrait de l'URL
+        var urlParams = new URLSearchParams(window.location.search);
+        var trackingId = urlParams.get('trackingId');
+        if (!trackingId) {
+            // Si le trackingId n'est pas trouvé dans l'URL, utilisez un fallback ou demandez à l'utilisateur de le fournir
+            trackingId = "8e22796c-015e-4d73-8e93-8649f9b357e3"; // Fallback trackingId
+        }
+
+        // Stockage du timestamp de début de la visite
+        var startTime = Math.floor(new Date().getTime() / 1000);
+
+        function sendData(data) {
+            data.tracking_id = trackingId; // Ajouter le trackingId aux données envoyées
+            fetch('http://localhost:3008/api/track-interaction', {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Data sent successfully:', data);
+                })
+                .catch(error => {
+                    console.error('Error sending data:', error);
+                });
+        }
+
+        // Événement déclenché lorsqu'une page est chargée
+        window.addEventListener('load', function () {
+            // Calcul de la durée de la visite
+            var endTime = Math.floor(new Date().getTime() / 1000);
+            var visitDuration = endTime - startTime;
+
+            // Envoi des données de la visite
+            sendData({ event_type: 'visit', page: window.location.href, duration: visitDuration });
+        });
+
+        // Événement déclenché lorsqu'une page est quittée
+        window.addEventListener('beforeunload', function () {
+            // Calcul de la durée de la visite
+            var endTime = Math.floor(new Date().getTime() / 1000);
+            var visitDuration = endTime - startTime;
+
+            // Envoi des données de la visite
+            sendData({ event_type: 'leave', page: window.location.href, duration: visitDuration });
+        });
+
+        // Capturer les clics sur chaque lien dans le document
+        document.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                // Envoi des données du clic sur le lien avec l'élément spécifié comme "link"
+                sendData({ event_type: 'click', element: 'link', timestamp: Math.floor(new Date().getTime() / 1000), page: link.href });
+            });
+        });
+
+        // Capturer les clics sur chaque bouton dans le document
+        document.querySelectorAll('button').forEach(function (button) {
+            button.addEventListener('click', function () {
+                // Envoi des données du clic sur le bouton avec l'élément spécifié comme "button"
+                sendData({ event_type: 'click', element: 'button', timestamp: Math.floor(new Date().getTime() / 1000), page: window.location.href });
+            });
+        });
+    </script>
+
+    <div class="container" id="app">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Nombre total de visiteurs</h5>
+                        <div class="card-text">
+                            <!-- Canvas pour le graphique -->
+                            <canvas id="trafficChart"></canvas>
+                            <!-- Paragraphe pour afficher le texte -->
+                            <p id="totalVisitors">Nombre total de visiteurs : <span id="totalCount"></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            {{!--
+            <script>
+                fetch('/chart10?trackingId={{trackingId}}')
+                    .then(response => response.json())
+                    .then(data => {
+                        const labels = data.map(item => item.event);
+                        const interactions = data.map(item => item.count);
+
+                        const ctx = document.getElementById('trafficChart').getContext('2d');
+                        const myChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: 'Nombre de visiteurs',
+                                    data: interactions,
+                                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                    borderColor: 'rgba(255, 99, 132, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+
+                        // Calculer le nombre total de visiteurs
+                        const totalCount = interactions.reduce((acc, curr) => acc + curr, 0);
+
+                        // Mettre à jour le texte avec le nombre total de visiteurs
+                        document.getElementById('totalCount').innerText = totalCount;
+                    })
+                    .catch(error => {
+                        console.error('Une erreur s\'est produite lors de la récupération des données:', error);
+                    });
+            </script> --}}
+
+            <script>
+                function fetchChartData() {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const trackingId = urlParams.get('trackingId');
+
+                    if (!trackingId) {
+                        console.error('Aucun tracking_id trouvé dans l\'URL.');
+                        return;
+                    }
+
+                    fetch(`/chart10?trackingId=${trackingId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const labels = data.map(item => item.event);
+                            const interactions = data.map(item => item.count);
+
+                            const ctx = document.getElementById('trafficChart').getContext('2d');
+                            const myChart = new Chart(ctx, {
+                                type: 'line',
+                                data: {
+                                    labels: labels,
+                                    datasets: [{
+                                        label: 'Nombre de visiteurs',
+                                        data: interactions,
+                                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                        borderColor: 'rgba(255, 99, 132, 1)',
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true
+                                        }
+                                    }
+                                }
+                            });
+
+                            const totalCount = interactions.reduce((acc, curr) => acc + curr, 0);
+                            document.getElementById('totalCount').innerText = totalCount;
+                        })
+                        .catch(error => {
+                            console.error('Une erreur s\'est produite lors de la récupération des données:', error);
+                        });
+                }
+
+                document.addEventListener('DOMContentLoaded', () => {
+                    fetchChartData();
+                });
+            </script>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+    <br />
+    {{!-- <br />
+    <canvas id="chart1"
+        style="width:50%;height:20vh;background:#faf8f9;border:1px solide #eceee8;margin-top:10px;"></canvas>
+    <canvas id="chart2"
+        style="width:50%;height:20vh;background:#faf8f9;border:1px solide #555652;margin-top:10px;"></canvas> --}}
+    <canvas id="chart3" width="400" height="400vh"
+        style="background:#faf8f9;border:1px solide #555652;margin-top:10px;"></canvas>
+    {{!-- <canvas id="chart4"
+        style="width:50%;height:20vh;background:#faf8f9;border:1px solide #555652;margin-top:10px;"></canvas>
+    <canvas id="chart5"
+        style="width:50%;height:20vh;background:#faf8f9;border:1px solide #555652;margin-top:10px;"></canvas>
+    <canvas id="chart6"
+        style="width:50%;height:20vh;background:#faf8f9;border:1px solide #555652;margin-top:10px;"></canvas>
+    <canvas id="chart7"
+        style="width: 50%;height:20vh;background:#faf8f9;border:1px solide #555652;margin-top:10px;"></canvas>
+    <canvas id="chart8"
+        style="width: 50%;height:20vh;background:#faf8f9;border:1px solide #555652;margin-top:10px;"></canvas>
+    <canvas id="chart9"
+        style="width: 50%;height:20vh;background:#faf8f9;border:1px solide #555652;margin-top:10px;"></canvas> --}}
+
+</body>
+
+</html>
