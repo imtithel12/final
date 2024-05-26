@@ -1,40 +1,95 @@
-fetch('/chart7')
-    .then(response => response.json())
-    .then(data => {
-        const labels = data.map(item => item.page);
-        const interactions = data.map(item => item.total_interactions);
+// chart1.js
 
-        const ctx = document.getElementById('chart7').getContext('2d');
-        const myChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Total Interactions',
-                    data: interactions,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.5)',
-                        'rgba(54, 162, 235, 0.5)',
-                        'rgba(255, 206, 86, 0.5)',
-                        'rgba(75, 192, 192, 0.5)',
-                        'rgba(153, 102, 255, 0.5)',
-                        'rgba(255, 159, 64, 0.5)',
-                        'rgba(255, 99, 132, 0.5)',
-                    ], // Couleurs de fond pour chaque tranche du graphique
-                    borderColor: 'rgba(255, 255, 255, 1)', // Couleur de bordure
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Répartition des interactions par page', // Titre du graphique
-                        font: {
-                            size: 16 // Taille de la police du titre
+
+
+function fetchChart7Data() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const trackingId = urlParams.get('trackingId');
+
+    if (!trackingId) {
+        console.error('Aucun tracking_id trouvé dans l\'URL.');
+        return;
+    }
+
+    fetch(`/chart7?trackingId=${trackingId}`)
+        .then(response => response.json())
+        .then(data => {
+            const labels = [];
+            const visitsData = [];
+            const uniquePagesVisitedData = [];
+            const durationInSecondsData = [];
+            const totalUserAgentsData = [];
+
+            // Générer les étiquettes pour les 5 dernières heures
+            for (let i = 4; i >= 0; i--) {
+                const date = new Date();
+                date.setHours(date.getHours() - i);
+                const hour = date.getHours();
+                const formattedHour = ("0" + hour).slice(-2); // Formatage de l'heure avec des zéros devant si nécessaire
+                labels.push(`${formattedHour}:00`);
+            }
+
+            // Remplir les données si des résultats sont disponibles
+            if (data.length > 0) {
+                data.forEach(item => {
+                    const hour = parseInt(item.hour);
+                    const index = labels.indexOf(`${hour}:00`);
+                    if (index !== -1) {
+                        visitsData[index] = item.count;
+                        uniquePagesVisitedData[index] = item.unique_pages_visited;
+                        durationInSecondsData[index] = item.duration_in_seconds;
+                        totalUserAgentsData[index] = item.unique_userAgent;
+                    }
+                });
+            } else {
+                // Si les données sont vides, remplir les tableaux avec des zéros
+                for (let i = 0; i < 5; i++) {
+                    visitsData.push(0);
+                    uniquePagesVisitedData.push(0);
+                    durationInSecondsData.push(0);
+                    totalUserAgentsData.push(0);
+                }
+            }
+
+            // Créer le graphique avec Chart.js
+            const ctx = document.getElementById('trafficChart7').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Sessions',
+                        data: visitsData,
+                        backgroundColor: 'rgba(230, 13, 230, 0.363)',
+                        borderColor: 'rgb(230, 13, 230)',
+                        borderWidth: 1,
+                        fill: false,
+                        tension: 0.4,
+                        pointStyle: 'cross'
+                    }, {
+                        label: 'Durée (seconde)',
+                        data: durationInSecondsData,
+                        backgroundColor: 'rgba(230, 208, 13, 0.377)',
+                        borderColor: 'rgb(230, 208, 13)',
+                        borderWidth: 1,
+                        fill: false,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
                         }
                     }
                 }
-            }
+            });
+        })
+        .catch(error => {
+            console.error('Une erreur s\'est produite:', error);
         });
-    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetchChart7Data();
+});

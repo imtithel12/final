@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-    <script src="userActivityTracker.js" type='text/javascript'></script>
     <style>
         @import'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css';
         @import'https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js';
@@ -32,8 +31,6 @@
         }
 
         .navbar {
-            background-color: white;
-            box-shadow: 0 2px 2px -2px rgba(128, 128, 128, 0.808);
             padding-bottom: 0px;
         }
 
@@ -65,23 +62,62 @@
 
         }
 
+        .btn-submit1 {
+            border-radius: 50px;
+            border: none;
+            height: 35px;
+            width: 120px;
+            font-size: 14px;
+            font-weight: 500;
+            background-color: white;
+            color: black;
+            font-weight: 500;
+            margin-left: 15%;
+
+        }
+
         .accuiel {
             position: absolute;
             top: 40%;
-            width: 40%;
-            margin-left: 55%;
-            margin-top: calc(-10%);
+            width: 45%;
+            margin-left: 53%;
+            margin-top: calc(-18%);
         }
 
         .card1 {
             margin-left: 5%;
+        }
+
+        #navLinks {
+            margin-right: 5%;
+        }
+
+        .nav-link {
+            color: white;
         }
     </style>
 
 </head>
 
 <body>
-    <nav id="mainNavbar" class="navbar navbar-expand-md py-0 fixed-top fixed-left bg-white">
+
+    <style>
+        #egg {
+            display: block;
+            position: absolute;
+            width: 700px;
+            height: 400px;
+            background: linear-gradient(to right, #DA70D6, #f845e0);
+            margin-left: 48.75%;
+            margin-top: calc(-20%);
+            border-bottom-left-radius: 50%;
+            border-bottom-right-radius: 50%;
+            border-top-left-radius: 50%;
+            color: #8906a3;
+        }
+    </style>
+    <div id="egg"></div>
+    <nav id="mainNavbar" class="navbar navbar-expand-md py-0 fixed-top fixed-left ">
         <br><br><br><br>
         <a href="#" class="navbar-brand"><img class="logo" width="18%" src="./img/logo.png"></a>
         <div class="collapse navbar-collapse" id="navLinks">
@@ -101,7 +137,7 @@
 
                 <div class="my-button container">
                     <a class="buttonl" href="/inscrire">
-                        <button class="btn btn-raised shadow my-button w-xs bg-purpule btn-submit">Commencer</button>
+                        <button class="btn btn-raised shadow my-button w-xs btn-submit1">Commencer</button>
                     </a>
                 </div>
             </ul>
@@ -134,89 +170,134 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                     personnalisés et des intégrations avec d'autres outils populaires.</small>
-            </div><br><br><br>
+            </div><br><br>
 
             <a class="buttonl" href="/inscrire">
                 <button class="btn-submit">Commencer</button>
             </a>
         </div>
-        <img class="accuiel" src="./img/accuiel.avif">
+        <img class="accuiel" src="./img/accuiel2.png">
     </div>
 
     <script>
-        // Stockage du trackingId extrait de l'URL
-        var urlParams = new URLSearchParams(window.location.search);
-        var trackingId = urlParams.get('trackingId');
-        if (!trackingId) {
-            // Si le trackingId n'est pas trouvé dans l'URL, utilisez un fallback ou demandez à l'utilisateur de le fournir
-            trackingId = "8e22796c-015e-4d73-8e93-8649f9b357e3"; // Fallback trackingId
-        }
+        document.addEventListener('DOMContentLoaded', function () {
+            var urlParams = new URLSearchParams(window.location.search);
+            var trackingId = urlParams.get('trackingId');
+            if (!trackingId) {
+                trackingId = "2d017fb7-36c6-48be-9fdb-8f2345a4d441";
+            }
 
-        // Stockage du timestamp de début de la visite
-        var startTime = Math.floor(new Date().getTime() / 1000);
+            var startTime = Math.floor(new Date().getTime() / 1000);  // Capture the start time in seconds as soon as the DOM is loaded
 
-        function sendData(data) {
-            data.tracking_id = trackingId; // Ajouter le trackingId aux données envoyées
-            fetch('http://localhost:3008/api/track-interaction', {
-                method: 'POST',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Data sent successfully:', data);
-                })
-                .catch(error => {
-                    console.error('Error sending data:', error);
+            function addBrowserInfo(data) {
+                // Adds browser's language and user-agent to the data object
+                data.language = navigator.language || navigator.userLanguage;
+                data.userAgent = navigator.userAgent;
+            }
+
+            function addGeolocation(data, callback) {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        data.latitude = position.coords.latitude;
+                        data.longitude = position.coords.longitude;
+                        callback(data);
+                    }, function (error) {
+                        console.error('Geolocation error:', error);
+                        data.latitude = "Unavailable";
+                        data.longitude = "Unavailable";
+                        callback(data);
+                    });
+                } else {
+                    console.error('Geolocation is not supported by this browser.');
+                    data.latitude = "Unsupported";
+                    data.longitude = "Unsupported";
+                    callback(data);
+                }
+            }
+
+            function addIpAddress(data, callback) {
+                fetch('https://api.ipify.org?format=json')
+                    .then(response => response.json())
+                    .then(ipData => {
+                        data.ipAddress = ipData.ip;
+                        callback(data);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching IP address:', error);
+                        data.ipAddress = "Unavailable";
+                        callback(data);
+                    });
+            }
+
+            function checkAndSendData(data) {
+                var isFirstVisit = localStorage.getItem('firstVisit') === null;
+                if (isFirstVisit) {
+                    localStorage.setItem('firstVisit', 'false');
+                    data.userType = 'new';
+                } else {
+                    data.userType = 'returning';
+                }
+                sendData(data);
+            }
+
+            function sendData(data) {
+                data.tracking_id = trackingId;
+                addBrowserInfo(data);
+                addGeolocation(data, function (geoData) {
+                    addIpAddress(geoData, function (finalData) {
+                        fetch('http://localhost:3008/api/track-interaction', {
+                            method: 'POST',
+                            mode: 'cors',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(finalData)
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                console.log('Data sent successfully:', data);
+                            })
+                            .catch(error => {
+                                console.error('Error sending data:', error);
+                            });
+                    });
                 });
-        }
+            }
 
-        // Événement déclenché lorsqu'une page est chargée
-        window.addEventListener('load', function () {
-            // Calcul de la durée de la visite
-            var endTime = Math.floor(new Date().getTime() / 1000);
-            var visitDuration = endTime - startTime;
-
-            // Envoi des données de la visite
-            sendData({ event_type: 'visit', page: window.location.href, duration: visitDuration });
-        });
-
-        // Événement déclenché lorsqu'une page est quittée
-        window.addEventListener('beforeunload', function () {
-            // Calcul de la durée de la visite
-            var endTime = Math.floor(new Date().getTime() / 1000);
-            var visitDuration = endTime - startTime;
-
-            // Envoi des données de la visite
-            sendData({ event_type: 'leave', page: window.location.href, duration: visitDuration });
-        });
-
-        // Capturer les clics sur chaque lien dans le document
-        document.querySelectorAll('a').forEach(function (link) {
-            link.addEventListener('click', function () {
-                // Envoi des données du clic sur le lien avec l'élément spécifié comme "link"
-                sendData({ event_type: 'click', element: 'link', timestamp: Math.floor(new Date().getTime() / 1000), page: link.href });
+            // Monitor when the page is fully loaded
+            window.addEventListener('load', function () {
+                var endTime = Math.floor(new Date().getTime() / 1000);
+                var visitDuration = endTime - startTime;
+                checkAndSendData({ event_type: 'visit', page: window.location.href, duration: visitDuration });
             });
-        });
 
-        // Capturer les clics sur chaque bouton dans le document
-        document.querySelectorAll('button').forEach(function (button) {
-            button.addEventListener('click', function () {
-                // Envoi des données du clic sur le bouton avec l'élément spécifié comme "button"
-                sendData({ event_type: 'click', element: 'button', timestamp: Math.floor(new Date().getTime() / 1000), page: window.location.href });
+            // Monitor when the user is about to leave the page
+            window.addEventListener('beforeunload', function () {
+                var endTime = Math.floor(new Date().getTime() / 1000);
+                var visitDuration = endTime - startTime;
+                checkAndSendData({ event_type: 'leave', page: window.location.href, duration: visitDuration });
+            });
+
+            // Track clicks on all links
+            document.querySelectorAll('a').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    checkAndSendData({ event_type: 'click', element: 'link', timestamp: Math.floor(new Date().getTime() / 1000), page: link.href });
+                });
+            });
+
+            // Track clicks on all buttons
+            document.querySelectorAll('button').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    checkAndSendData({ event_type: 'click', element: 'button', timestamp: Math.floor(new Date().getTime() / 1000), page: window.location.href });
+                });
             });
         });
     </script>
-
-
 </body>
 
 </html>

@@ -1,345 +1,122 @@
-<!-- register.handlebars -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <script src="userActivityTracker.js" type='text/javascript'></script>
+    <title>Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCliSdfYda_I-CwHZnGoxgg7RtxagFCc98&callback=initMap"
+        async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCliSdfYda_I-CwHZnGoxgg7RtxagFCc98"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ua-parser-js/0.7.28/ua-parser.min.js"></script>
+    <script src="node_modules/ua-parser-js/dist/ua-parser.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+
     <style>
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js');
+        @import url('https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js');
+        @import url('https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css');
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         @import url('https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css');
         @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css');
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        :root {
-
-            --body-color: #f7c9f721;
-            --sidebar-color: #FFF;
-            --primary-color: #DA70D6;
-            --primary-color-light: #F6F5FF;
-            --toggle-color: #DDD;
-            --text-color: #DA70D6;
-            --tran-03: all 0.2s ease;
-            --tran-03: all 0.3s ease;
-            --tran-04: all 0.3s ease;
-            --tran-05: all 0.3s ease;
+        a {
+            text-decoration: none;
         }
 
         body {
-            min-height: 100vh;
-            background-color: var(--body-color);
-            transition: var(--tran-05);
+            margin: 0;
+            padding: 0;
+            font-family: 'montserrat';
+            background-color: #ebd2e9;
+            background-size: 100% 633px;
         }
 
-        ::selection {
-            background-color: var(--primary-color);
-            color: #fff;
+        .logo {
+            padding: 20px;
+            margin-left: 8%;
+            width: 80%;
         }
 
-        /* ===== Sidebar ===== */
-        .sidebar {
+        .souslogo {
+            color: white;
+            width: 180px;
+            margin: 0 auto;
+        }
+
+        nav ul {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 230px;
             position: fixed;
             top: 0;
             left: 0;
-            height: 100%;
-            width: 250px;
-            padding: 10px 14px;
-            transition: var(--tran-05);
-            z-index: 100;
+            background-color: #DA70D6;
         }
 
-        .sidebar.close {
-            width: 88px;
-        }
-
-        /* ===== Reusable code - Here ===== */
-        .sidebar li {
-            height: 50px;
+        nav ul li {
             list-style: none;
-            display: flex;
-            align-items: center;
-            margin-top: 10px;
         }
 
-        .sidebar header .image,
-        .sidebar .icon {
-            min-width: 60px;
-            border-radius: 6px;
-        }
 
-        .sidebar .icon {
-            min-width: 60px;
-            border-radius: 6px;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        .sidebar .text,
-        .sidebar .icon {
-            color: white;
-            transition: var(--tran-03);
-        }
-
-        .sidebar .text {
-            font-size: 17px;
-            font-weight: 500;
-            white-space: nowrap;
-            opacity: 1;
-        }
-
-        .sidebar.close .text {
-            opacity: 0;
-        }
-
-        /* =========================== */
-
-        .sidebar header {
-            position: relative;
-        }
-
-        .sidebar header .image-text {
-            display: flex;
-            align-items: center;
-        }
-
-        .sidebar header .logo-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        header .image-text .name {
-            margin-top: 2px;
-            font-size: 18px;
-            font-weight: 600;
-            color: #DA70D6;
-        }
-
-        header .image-text .profession {
-            font-size: 16px;
-            margin-top: -2px;
+        nav ul li a {
             display: block;
-        }
-
-        .sidebar header .image {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .sidebar header .image img {
-            width: 40px;
-            border-radius: 6px;
-        }
-
-        .sidebar header .toggle {
-            position: absolute;
-            top: 50%;
-            right: -35px;
-            transform: translateY(-50%) rotate(180deg);
-            height: 40px;
-            width: 40px;
-            background-color: var(--primary-color);
-            color: var(--sidebar-color);
-            border-radius: 3px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            cursor: pointer;
-            transition: var(--tran-05);
-        }
-
-        body.dark .sidebar header .toggle {
-            color: var(--text-color);
-        }
-
-        .sidebar.close .toggle {
-            transform: translateY(-50%) rotate(0deg);
-        }
-
-        .sidebar .menu {
-            margin-top: 40px;
-        }
-
-        .sidebar li.search-box {
-            border-radius: 6px;
-            background-color: var(--primary-color-light);
-            cursor: pointer;
-            transition: var(--tran-05);
-        }
-
-        .sidebar li.search-box input {
-            height: 100%;
-            width: 100%;
-            outline: none;
-            border: none;
-            background-color: var(--primary-color-light);
-            color: var(--text-color);
-            border-radius: 6px;
-            font-size: 17px;
-            font-weight: 500;
-            transition: var(--tran-05);
-        }
-
-        .sidebar li a {
-            list-style: none;
-            height: 100%;
-            background-color: transparent;
-            display: flex;
-            align-items: center;
-            height: 100%;
-            width: 100%;
-            border-radius: 6px;
             text-decoration: none;
-            transition: var(--tran-03);
-        }
-
-        .sidebar li a:hover {
-            background-color: var(--primary-color);
-        }
-
-        .sidebar li a:hover .icon,
-        .sidebar li a:hover .text {
-            color: var(--sidebar-color);
-        }
-
-        body.dark .sidebar li a:hover .icon,
-        body.dark .sidebar li a:hover .text {
-            color: var(--text-color);
-        }
-
-        .sidebar .menu-bar {
-            height: calc(100% - 55px);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            overflow-y: scroll;
-        }
-
-        .menu-bar::-webkit-scrollbar {
-            display: none;
-        }
-
-        .sidebar .menu-bar .mode {
-            border-radius: 6px;
-            background-color: var(--primary-color-light);
+            text-transform: uppercase;
+            font-size: 15px;
+            color: white;
             position: relative;
-            transition: var(--tran-05);
+            padding: 10px 0px 10px 25px;
+            transition: all 0.5s;
         }
 
-        .menu-bar .mode .sun-moon {
-            height: 50px;
-            width: 60px;
+        .activealways {
+            color: #160216;
         }
 
-        .mode .sun-moon i {
-            position: absolute;
+        .active {
+            color: #130112;
+            border-left: 10px solid #c90ac2;
         }
 
-        .mode .sun-moon i.sun {
-            opacity: 0;
-        }
-
-        body.dark .mode .sun-moon i.sun {
-            opacity: 1;
-        }
-
-        body.dark .mode .sun-moon i.moon {
-            opacity: 0;
-        }
-
-        .menu-bar .bottom-content .toggle-switch {
-            position: absolute;
-            right: 0;
-            height: 100%;
-            min-width: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .toggle-switch .switch {
-            position: relative;
-            height: 22px;
-            width: 40px;
-            border-radius: 25px;
-            background-color: var(--toggle-color);
-            transition: var(--tran-05);
-        }
-
-        .switch::before {
+        nav ul li a:before {
+            color: black;
             content: '';
             position: absolute;
-            height: 15px;
-            width: 15px;
-            border-radius: 50%;
-            top: 50%;
-            left: 5px;
-            transform: translateY(-50%);
-            background-color: var(--sidebar-color);
-            transition: var(--tran-04);
-        }
-
-        body.dark .switch::before {
-            left: 20px;
-        }
-
-        .home {
-            position: absolute;
             top: 0;
-            left: 250px;
-            height: 100vh;
-            width: calc(100% - 250px);
-            background-color: var(--body-color);
-            transition: var(--tran-05);
+            right: 0;
+            height: 100%;
+            background-color: #EDB9EB;
+            border-radius: 40px 0 0 40px;
+            z-index: -1;
+            transition: all 1s;
         }
 
-        .home .text {
-            font-size: 30px;
-            font-weight: 500;
-            color: var(--text-color);
-            padding: 12px 60px;
-        }
-
-        .sidebar.close~.home {
-            left: 78px;
-            height: 100vh;
-            width: calc(100% - 78px);
-        }
-
-        body.dark .home .text {
-            color: var(--text-color);
-        }
-
-        .icon::after {
+        nav ul li a:hover {
             color: white;
         }
 
-        //////////////////////////////////////////////////////////////////////////////
-        .profile {
-            position: relative;
-            text-align: center;
-            margin-top: 60px
+        nav ul li a:hover:before {
+            width: 95%;
         }
 
-        .profile {
-            position: relative;
-            margin-left: 95.5%;
+        .section {
+            display: grid;
+            place-items: center;
         }
 
-        #linkpro {
-            color: white;
-            height: 30px;
+        ////////////////////////////////////////////////////////////////////////
+        .logo4 {}
+
+        .wrapper {
+            margin-left: 260px;
         }
 
         .username {
@@ -373,7 +150,7 @@
             display: block
         }
 
-        .profile #ulprof {
+        .profile ul {
             background-color: #DA70D6;
             width: 200px;
             height: 230px;
@@ -387,7 +164,7 @@
             margin-top: calc(-4%);
         }
 
-        .profile #ulprof::before {
+        .profile ul::before {
             content: '';
             position: absolute;
             background-color: #DA70D6;
@@ -398,7 +175,7 @@
             transform: rotate(45deg)
         }
 
-        #liprof {
+        .profile ul li {
             list-style: none;
             text-align: left;
             font-size: 15px;
@@ -410,520 +187,365 @@
             border-radius: 4px
         }
 
-        #liprof:hover {
+        .profile ul li:hover {
             background-color: #7c0678;
             border-radius: 4px
         }
 
-        #liprof i {
+        .profile ul li i {
             margin-right: 7px
         }
 
-        i {
+        .iprofile {
             color: white;
         }
 
-        ////////////////////////////////////////////////////////////////////////////////
-
-        .block,
-        .card {
-            background: #fff;
-            margin-bottom: 1.5rem;
+        .profile {
+            color: black;
+            margin-top: 0.4%;
+            margin-left: 96.7%;
+            font-family: sans-serif;
         }
 
-        .avatar {
-            position: relative;
-            line-height: 1;
-            border-radius: 500px;
-            white-space: nowrap;
-            font-weight: 700;
-            border-radius: 100%;
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-pack: center;
-            justify-content: center;
-            -ms-flex-align: center;
-            align-items: center;
-            -ms-flex-negative: 0;
-            flex-shrink: 0;
-            border-radius: 500px;
+        .profile:hover {
+            color: black;
         }
 
-        .avatar img {
-            border-radius: inherit;
-            width: 100%;
+        .profileicon {
+            font-size: 300%;
+            color: black;
         }
 
-        .gd-primary {
-            font-family: cursive;
-            color: rgb(54, 54, 54);
-            border-style: solid;
-            border-color: #DA70D6;
-        }
-
-        .profileimgg {
-            width: 250px;
-            height: 250px;
-            border-radius: 50%;
-            border-width: 1px;
-            border: 2px solid #DA70D6;
-            cursor: pointer;
-        }
-
-
-        .list {
-            padding-left: 0;
-            padding-right: 0;
-        }
-
-        .list-item {
-            position: relative;
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-direction: column;
-            flex-direction: column;
-            min-width: 0;
-            word-wrap: break-word;
-        }
-
-        .list-row .list-item {
-            -ms-flex-direction: row;
-            flex-direction: row;
-            -ms-flex-align: center;
-            align-items: center;
-        }
-
-        .list-row .list-item>* {
-            padding-left: .625rem;
-            padding-right: .625rem
-        }
-
-        .no-wrap {
-            white-space: nowrap
-        }
-
-        .text-color {
-            color: #5e676f
-        }
-
-        .text-gd {
-            -webkit-background-clip: text;
-            -moz-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            -moz-text-fill-color: transparent;
-            text-fill-color: transparent
-        }
-
-        .text-sm {
-            font-size: .825rem
-        }
-
-        .h-1x {
-            height: 1.25rem;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical
-        }
-
-
-        .w-48 {
-            width: 300px !important;
-            height: 300px !important
-        }
-
-
-        a:link {
-
-            text-decoration: none;
-        }
-
-
-
-        #urltitre {
-            color: rgb(161, 159, 159);
-            font: italic small-caps bold 16px/2 cursive;
-        }
-
-        #urltitre:hover {
-            color: #DA70D6;
-        }
-
-        #textsous {
-            color: #5e676f
-        }
-
-        .list {
-            background-color: white;
-            border-radius: 5px;
-            border: 1px solid rgb(175, 175, 175);
-        }
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        #liste {}
 
         #liste {
-            color: #18191a;
-            font: italic small-caps bold 30px/2 cursive;
+            color: black;
+            font-size: 20px;
+            font-weight: bold;
         }
 
-        .partie {
-            box-shadow: 0 2px 2px -2px rgba(128, 128, 128, 0.808);
+        #recent {
+            color: rgb(88, 88, 88);
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .iconrecent {
+            font-size: 0.8em;
+        }
+
+        .notebook {
+            width: 50px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .titre {
+            overflow: hidden;
+        }
+
+        .click {
+            width: 150px;
+            text-align: right;
+            overflow: hidden;
+        }
+
+        .param {
+            width: 23px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        table {
+            background: white;
+            --border: 1px solid white;
+            border-radius: 10px;
+            border-collapse: separate;
+            border: var(--border);
+            table-layout: fixed;
+            width: 1050px;
+            height: 100px;
+        }
+
+        .btngo {
+            align-items: center;
             background-color: white;
+            border: 1.5px solid rgb(156, 155, 155);
+            border-radius: 100px;
+            height: 40%;
         }
 
-        .btnvoir {
-            background-color: #ffd900cb;
-            border-radius: 4px;
-            border: 2px solid #ffd900cb;
-            cursor: pointer;
+        .souslogo {
+            background-image: linear-gradient(rgba(241, 241, 247, 0.5), rgba(255, 255, 255, 0.24)), url('');
+            position: relative;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            text-align: center;
         }
 
-        .btnadd {
-            background-color: #ffd900cb;
-            border-radius: 4px;
-            border: 2px solid #ffd900cb;
-            cursor: pointer;
-            margin-left: 84.5%;
-            font-size: 15px;
-            padding: 0.5%;
+
+        .imgsouslogo {
+            margin-top: calc(-25%);
         }
 
-        .iconadd {
-            color: #18191a;
+        .icondelete {
+            color: #49045a;
         }
 
-        #urltitreg {
-            color: rgb(78, 77, 77);
-            font: italic bold 16px/2 cursive;
-        }
-
-        #urltitreg:hover {
-            color: #DA70D6;
-        }
-
-        .iconcog {
-            color: #18191a;
-            margin-left: 95%;
-        }
-
-        .iconcog:hover {
-            color: white;
-
-            background-color: var(--primary-color);
-            padding: 0.2%;
+        .delete {
+            background-color: white;
+            border: 1px solid white;
             border-radius: 5px;
-        }
-
-        #hrm {
-
-            border: 10px solid var(--body-color);
-            border-radius: 5px;
-        }
-
-        .sidebar {
-            background-color: #7c0678;
-            color: white;
         }
     </style>
+
 </head>
 
 <body>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const body = document.querySelector('body');
-            const sidebar = body.querySelector('nav');
-            const toggle = body.querySelector(".toggle");
-            const searchBtn = body.querySelector(".search-box");
-            const modeSwitch = body.querySelector(".toggle-switch");
-            const modeText = body.querySelector(".mode-text");
+        document.addEventListener("DOMContentLoaded", function (event) {
 
-            toggle.addEventListener("click", () => {
-                sidebar.classList.toggle("close");
-            });
+            const showNavbar = (toggleId, navId, bodyId, headerId) => {
+                const toggle = document.getElementById(toggleId),
+                    nav = document.getElementById(navId),
+                    bodypd = document.getElementById(bodyId),
+                    headerpd = document.getElementById(headerId)
 
-            searchBtn.addEventListener("click", () => {
-                sidebar.classList.remove("close");
-            });
-
-            modeSwitch.addEventListener("click", () => {
-                body.classList.toggle("dark");
-
-                if (body.classList.contains("dark")) {
-                    modeText.innerText = "Light mode";
-                } else {
-                    modeText.innerText = "Dark mode";
+                // Validate that all variables exist
+                if (toggle && nav && bodypd && headerpd) {
+                    toggle.addEventListener('click', () => {
+                        // show navbar
+                        nav.classList.toggle('show')
+                        // change icon
+                        toggle.classList.toggle('bx-x')
+                        // add padding to body
+                        bodypd.classList.toggle('body-pd')
+                        // add padding to header
+                        headerpd.classList.toggle('body-pd')
+                    })
                 }
-            });
-        });
+            }
 
+            showNavbar('header-toggle', 'nav-bar', 'body-pd', 'header')
+
+            /*===== LINK ACTIVE =====*/
+            const linkColor = document.querySelectorAll('.nav_link')
+
+            function colorLink() {
+                if (linkColor) {
+                    linkColor.forEach(l => l.classList.remove('active'))
+                    this.classList.add('active')
+                }
+            }
+            linkColor.forEach(l => l.addEventListener('click', colorLink))
+
+            // Your code to run since DOM is loaded and ready
+        });
     </script>
 
-    <nav class="sidebar close">
-
-
-        <header>
-            <div class="image-text">
-
-                <a href="/">
-                    <span class="image">
-                        <img class="logo1" alt="drawing" src=".\img\logo1.png">
-                    </span>
-                </a>
-
-                <div class="text logo-text">
-                    <span class="name">TrackMySite</span>
-                </div>
+    <nav>
+        <ul>
+            <a href="/">
+                <img class="logo" alt="drawing" src=".\img\logo3.png">
+            </a>
+            <hr class="souslogo">
+            <li><a href="/"><i class="fa fa-home"></i>&nbsp; Home</a></li>
+            <li><a href="/projets" class=" active activealways "><i class="fa fa-book"></i>&nbsp; Projets</a></li>
+            <li><a href="/addurl"><i class="fa fa-plus iconadd2"></i>&nbsp; Ajouter projet</a></li>
+            <br><br><br><br><br><br><br><br><br><br><br><br>
+            <div class="souslogo">
+                <img class="imgsouslogo" width="90%" src="./img/souslogo.png">
             </div>
 
-            <i class='bx bx-chevron-right toggle'></i>
-        </header>
 
-        <div class="menu-bar">
-            <div class="menu">
-
-                <ul class="menu-links">
-                    <li class="nav-link active">
-                        <a href="#" class="active">
-                            <i class="fa fa-file-text icon" aria-hidden="true"></i>
-                            <span class="text nav-text">Liste des projets</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-link">
-                        <a href="/addUrl">
-                            <i class="fa fa-plus-square icon" aria-hidden="true"></i>
-                            <span class="text nav-text">Ajouter projet</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-bell icon'></i>
-                            <span class="text nav-text">Notifications</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-pie-chart-alt icon'></i>
-                            <span class="text nav-text">Stats</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-heart icon'></i>
-                            <span class="text nav-text">Favourites</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-wallet icon'></i>
-                            <span class="text nav-text">Money</span>
-                        </a>
-                    </li>
-
-                </ul>
-            </div>
-
-            <div class="bottom-content">
-                <li class="">
-                    <a href="/logout">
-                        <i class='bx bx-log-out icon'></i>
-                        <span class="text nav-text">Logout</span>
-                    </a>
-                </li>
-
-            </div>
-        </div>
-
+        </ul>
     </nav>
 
+    <div class="dropdown">
+        <div class="profile">
+            <div class="username"><b>{{client.first_letter}}</b></div>
+            <div class="dropdown-content">
+                <ul>
+                    <li>
+                        <i class='bx bx-user iprofile'></i>
+                        <span>
+                            <form action="/projets" method="GET">
+                                <button class="nav-link fw-bold py-1 px-0 btn p=3 text-white"
+                                    type="submit">Projets</button>
 
-    <section class="home">
+                            </form>
+                        </span>
+                    </li>
+                    <li>
+                        <i class='bx bx-cog iprofile'></i>
+                        <span>
+                            <form action="/profile" method="Get">
+                                <button class="nav-link fw-bold py-1 px-0 btn p=3 text-white"
+                                    type="submit">Profile</button>
 
-        <div class="partie">
-            <li class="nav-item">
-                <div class="dropdown">
-                    <div class="profile">
-                        <div class="username"><b>{{client.first_letter}}</b></div>
-                        <div class="dropdown-content">
-                            <ul id="ulprof">
-                                <li id="liprof">
-                                    <i class='bx bx-user'></i>
-                                    <span>
-                                        <a href="#" id="linkpro">
-                                            Projets
-                                        </a>
-                                    </span>
-                                    <div></div>
-                                </li>
-                                <li id="liprof">
-                                    <i class='bx bx-cog'></i>
-                                    <span>
-                                        <a href="/profile" id="linkpro">
-                                            Profile
-                                        </a>
-                                    </span>
-                                </li>
-                                <li id="liprof">
-                                    <i class='bx bx-cog'></i>
-                                    <span>
-                                        <a href="/#" id="linkpro">
-                                            Help
-                                        </a>
-                                    </span>
-                                </li>
-                                <li id="liprof">
-                                    <i class='bx bx-log-in-circle'></i>
-                                    <span>
-                                        <a href="/logout" id="linkpro">
-                                            Logout
-                                        </a>
-                                    </span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </div>
+                            </form>
+                        </span>
+                    </li>
+                    <li>
+                        <i class='bx bx-cog iprofile'></i>
+                        <span>
+                            <form action="/logout" method="POST">
+                                <button class="nav-link fw-bold py-1 px-0 btn p=3 text-white"
+                                    type="submit">Help</button>
 
-        <div class="text back">
-            <div id="urlsblock">
-                <div class="desc py-4 align-items-center">
-                    <div class="page-content page-container justify-content-center" id="page-content">
-                        <div class="padding">
-                            <div class="row">
-                                <div>
-                                    <p id="liste">Liste des projets</p>
+                            </form>
+                        </span>
+                    </li>
+                    <li>
+                        <i class='bx bx-log-in-circle iprofile'></i>
+                        <span>
+                            <form action="/logout" method="POST">
+                                <button class="nav-link fw-bold py-1 px-0 btn p=3 text-white"
+                                    type="submit">Logout</button>
 
-                                    {{#each urls}}
-
-                                    <a href="/chart?trackingId={{this.tracking_id}}">
-                                        <div class="list list-row block">
-                                            <div class="list-item list-group-item d-flex justify-content-between align-content-center"
-                                                data-id="7">
-                                                <div>
-                                                    <div id="urltitreg">
-                                                        <b>{{titre}}</b>
-                                                    </div>
-
-                                                    <div id="urltitre">
-                                                        {{url}}
-                                                    </div>
-
-                                                    <button type="submit" class=" btn btnvoir">Voir
-                                                        Dashboard
-                                                    </button>
-
-                                                </div>
-
-                                            </div>
-                                            <a href="/">
-                                                <i class="fa fa-cog iconcog" aria-hidden="true"></i>
-                                            </a>
-
-                                        </div>
-
-
-                                        <hr id="hrm">
-
-                                    </a>
-                                    {{/each}}
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                            </form>
+                        </span>
+                    </li>
+                </ul>
             </div>
         </div>
-        <br>
-        <form action="/addUrl" method="GET">
-            <button type="submit" class=" btn btnadd">
+    </div>
+    <div class="wrapper">
+        <div class="section">
+            <div class="box-area">
+                <div class="py-4">
+                    <p id="liste">Liste des projets</p>
+                    <br>
+                    <p id="recent">RECENT<i class="fa fa-clock-o iconrecent" aria-hidden="true"></i>
+                    </p>
+                    {{#if urlsToday.length}}
+                    {{#each urlsToday}}
+                    <div class=" d-flex">
+                        <table>
+                            <tr>
+                                <td class="notebook">
+                                    <img width="80%" src="./img/notebook.png">
+                                </td>
+                                <td class="titre">
+                                    <div id=" urltitreg">
+                                        <b>{{titre}}</b>
+                                    </div>
 
-                <i class="fa fa-plus-square-o iconadd" aria-hidden="true"></i>
-                Ajouter projet</button>
-        </form>
-        <br>
-    </section>
+                                    <div id="urltitre">
+                                        {{url}}
+                                    </div>
+                                </td>
+                                <td class="click">
+                                    <a href="/rapport?trackingId={{this.tracking_id}}" class=" ago">
+                                        <button type="submit" class=" btngo">
 
+                                            <i class="fa fa-newspaper-o btnvoir" aria-hidden="true"></i>
+                                            Voir Rapport
+                                        </button>
+                                    </a>
+                                </td>
+                                <td class="click">
+                                    <a href="/chart?trackingId={{this.tracking_id}}" class=" ago">
+                                        <button type="submit" class=" btngo">
+                                            <i class="fa fa-bar-chart btnvoir" aria-hidden="true"></i>
+                                            Voir Dashboard
+                                        </button>
+                                    </a>
+                                </td>
+                                <td class="param">
+                                    <form action="/deleteUrlp/{{id}}" method="POST" onsubmit="return confirmDelete();">
+                                        <!-- Inclure l'ID de l'URL dans l'action du formulaire -->
+                                        <button type="submit" class="delete">
+                                            <i class="fa fa-trash icondelete" aria-hidden="true"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br>
+                </div>
+                {{/each}}
+                {{else}}
+                <p class="aucun">Aucun projet pour aujourd'hui.</p>
+                {{/if}}
 
+                <p id="recent">ALL</p>
+                {{#each urls}}
+                <div class=" d-flex">
+                    <table>
+                        <tr>
+                            <td class="notebook">
+                                <img width="80%" src="./img/notebook.png">
+                            </td>
+                            <td class="titre">
+                                <div id=" urltitreg">
+                                    <b>{{titre}}</b>
+                                </div>
 
+                                <div id="urltitre">
+                                    {{url}}
+                                </div>
+                            </td>
+                            <td class="click">
+                                <a href="/rapport?trackingId={{this.tracking_id}}">
+                                    <button type="submit" class=" btngo">
 
+                                        <i class="fa fa-newspaper-o btnvoir" aria-hidden="true"></i>
+                                        Voir Rapport
+                                    </button>
+                                </a>
+                            </td>
+                            <td class="click">
+                                <a href="/chart?trackingId={{this.tracking_id}}">
+                                    <button type="submit" class=" btngo">
+                                        <i class="fa fa-bar-chart btnvoir" aria-hidden="true"></i>
+                                        Voir Dashboard
+                                    </button>
+                                </a>
+                            </td>
+                            <td class="param">
+                                <form action="/deleteUrlp/{{id}}" method="POST" onsubmit="return confirmDelete();">
+                                    <!-- Inclure l'ID de l'URL dans l'action du formulaire -->
+                                    <button type="submit" class="delete">
+                                        <i class="fa fa-trash icondelete" aria-hidden="true"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <br>
+
+                {{/each}}
+            </div>
+        </div>
+    </div>
     <script>
-        // Stockage du trackingId extrait de l'URL
-        var urlParams = new URLSearchParams(window.location.search);
-        var trackingId = urlParams.get('trackingId');
-        if (!trackingId) {
-            // Si le trackingId n'est pas trouvé dans l'URL, utilisez un fallback ou demandez à l'utilisateur de le fournir
-            trackingId = "8e22796c-015e-4d73-8e93-8649f9b357e3"; // Fallback trackingId
+        function confirmDelete() {
+            return confirm("Êtes-vous sûr de vouloir supprimer cette URL ?");
         }
 
-        // Stockage du timestamp de début de la visite
-        var startTime = Math.floor(new Date().getTime() / 1000);
-
-        function sendData(data) {
-            data.tracking_id = trackingId; // Ajouter le trackingId aux données envoyées
-            fetch('http://localhost:3008/api/track-interaction', {
-                method: 'POST',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Data sent successfully:', data);
-                })
-                .catch(error => {
-                    console.error('Error sending data:', error);
-                });
+        function showAlert(message) {
+            alert(message);
         }
 
-        // Événement déclenché lorsqu'une page est chargée
-        window.addEventListener('load', function () {
-            // Calcul de la durée de la visite
-            var endTime = Math.floor(new Date().getTime() / 1000);
-            var visitDuration = endTime - startTime;
-
-            // Envoi des données de la visite
-            sendData({ event_type: 'visit', page: window.location.href, duration: visitDuration });
-        });
-
-        // Événement déclenché lorsqu'une page est quittée
-        window.addEventListener('beforeunload', function () {
-            // Calcul de la durée de la visite
-            var endTime = Math.floor(new Date().getTime() / 1000);
-            var visitDuration = endTime - startTime;
-
-            // Envoi des données de la visite
-            sendData({ event_type: 'leave', page: window.location.href, duration: visitDuration });
-        });
-
-        // Capturer les clics sur chaque lien dans le document
-        document.querySelectorAll('a').forEach(function (link) {
-            link.addEventListener('click', function () {
-                // Envoi des données du clic sur le lien avec l'élément spécifié comme "link"
-                sendData({ event_type: 'click', element: 'link', timestamp: Math.floor(new Date().getTime() / 1000), page: link.href });
-            });
-        });
-
-        // Capturer les clics sur chaque bouton dans le document
-        document.querySelectorAll('button').forEach(function (button) {
-            button.addEventListener('click', function () {
-                // Envoi des données du clic sur le bouton avec l'élément spécifié comme "button"
-                sendData({ event_type: 'click', element: 'button', timestamp: Math.floor(new Date().getTime() / 1000), page: window.location.href });
-            });
-        });
+        // Extraction du message de notification du paramètre de requête 'message' dans l'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const message = urlParams.get('message');
+        if (message) {
+            showAlert(message); // Affichage du message si présent
+        }
     </script>
+    <form action="/addUrl" method="GET">
+        <button type="submit" class=" btn btnbottom">
+            <i class="fa fa-plus iconadd2" aria-hidden="true"></i>
+            Ajouter projet
+        </button>
+    </form>
+    <br>
+
 </body>
+
 
 </html>

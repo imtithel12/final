@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <style>
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js');
+        @import url('https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js');
+        @import url('https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css');
+
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'montserrat';
+            background: white;
+        }
+
+        .logo {
+            padding: 20px;
+            margin-left: 8%;
+            width: 80%;
+        }
+
+        .souslogo {
+            color: white;
+            width: 180px;
+            margin: 0 auto;
+        }
+
+        nav ul {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 230px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #DA70D6;
+        }
+
+        nav ul li {
+            list-style: none;
+        }
+
+
+        nav ul li a {
+            display: block;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 13px;
+            color: white;
+            position: relative;
+            padding: 10px 0px 5px 25px;
+            transition: all 0.5s;
+        }
+
+        nav ul li a::before {
+            color: black;
+            font-weight: bold;
+            content: '';
+            top: 0;
+            right: 0;
+            height: 100%;
+            background-color: white;
+            border-radius: 40px 0 0 40px;
+            z-index: -1;
+            transition: all 1s;
+        }
+
+        .activealways {
+            color: #160216;
+        }
+
+        .active {
+            color: #130112;
+            border-left: 10px solid #c90ac2;
+        }
+
+        nav ul li a:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            background-color: white;
+            border-radius: 40px 0 0 40px;
+            z-index: -1;
+            transition: all 1s;
+        }
+
+        nav ul li a:hover {
+            color: #2b2626;
+        }
+
+        nav ul li a:hover:before {
+            width: 95%;
+        }
+
+        .section {
+            display: grid;
+            place-items: center;
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        .logo4 {}
+
+        .wrapper {
+            margin-left: 260px;
+        }
+
+        .logo4 {
+            width: 23%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .titre {
+            Font-family: Perpetua, Baskerville, Big Caslon, Palatino Linotype, Palatino, serif;
+            font-size: 50px;
+            text-align: center;
+            color: #c90ac2;
+        }
+
+        .dailytitre {
+            Font-family: Perpetua, Baskerville, Big Caslon, Palatino Linotype, Palatino, serif;
+            text-align: center;
+            color: #c90ac2;
+        }
+
+        .date {
+            text-align: center;
+        }
+
+        .table2 {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .rightbr {
+            border-right: 1px solid rgb(179, 178, 178);
+        }
+
+        td:not(.tddef, .tddef1) {
+            width: 15em;
+            height: 0em;
+            text-align: center;
+            font-family: sans-serif;
+        }
+
+        .tabledef {
+            width: 100%;
+            --border: 1px solid white;
+            border-radius: 10px;
+            border-spacing: 0;
+            border-collapse: separate;
+            border: var(--border);
+            overflow: hidden;
+            color: rgb(31, 30, 30);
+        }
+
+        h3 {
+            Font-family: Perpetua, Baskerville, Big Caslon, Palatino Linotype, Palatino, serif;
+
+        }
+
+        .tddef {
+            text-align: center;
+        }
+
+        .tddef1 {
+            text-align: center;
+        }
+
+        .tddef1 {
+            width: 15em;
+            height: 0em;
+            text-align: left;
+        }
+
+        .trdef1 {
+            background-color: #e2ade0;
+        }
+
+        .trdef2 {
+            background-color: #e4c1e3;
+        }
+
+        .trdef3 {
+            background-color: #e2ade0;
+        }
+
+        .trdef4 {
+            background-color: #e4c1e3;
+        }
+
+        .number {
+            color: #c90ac2;
+        }
+
+        #msg {
+            color: #c90ac2;
+        }
+
+        a {
+            text-decoration: none;
+
+        }
+
+        .profile {
+            color: black;
+        }
+
+        .profile:hover {
+            color: black;
+        }
+
+        .profileicon {
+            font-size: 300%;
+            color: black;
+        }
+
+        .url {
+            Font-family: Perpetua, Baskerville, Big Caslon, Palatino Linotype, Palatino, serif;
+            font-size: 25px;
+            text-align: center;
+            color: black;
+        }
+
+        h3 {
+            font-size: 20px;
+        }
+
+        .telecharger {
+            position: absolute;
+            margin-left: 92%;
+            margin-top: 1%;
+            background-color: white;
+            border: 1px solid rgb(20, 20, 20);
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .souslogo {
+            background-image: linear-gradient(rgba(241, 241, 247, 0.5), rgba(255, 255, 255, 0.24)), url('');
+            position: relative;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            text-align: center;
+            margin-top: 1%;
+        }
+
+
+        .imgsouslogo {
+            margin-top: calc(-25%);
+        }
+    </style>
+
+</head>
+
+<body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function (event) {
+
+            const showNavbar = (toggleId, navId, bodyId, headerId) => {
+                const toggle = document.getElementById(toggleId),
+                    nav = document.getElementById(navId),
+                    bodypd = document.getElementById(bodyId),
+                    headerpd = document.getElementById(headerId)
+
+                // Validate that all variables exist
+                if (toggle && nav && bodypd && headerpd) {
+                    toggle.addEventListener('click', () => {
+                        // show navbar
+                        nav.classList.toggle('show')
+                        // change icon
+                        toggle.classList.toggle('bx-x')
+                        // add padding to body
+                        bodypd.classList.toggle('body-pd')
+                        // add padding to header
+                        headerpd.classList.toggle('body-pd')
+                    })
+                }
+            }
+
+            showNavbar('header-toggle', 'nav-bar', 'body-pd', 'header')
+
+            /*===== LINK ACTIVE =====*/
+            const linkColor = document.querySelectorAll('.nav_link')
+
+            function colorLink() {
+                if (linkColor) {
+                    linkColor.forEach(l => l.classList.remove('active'))
+                    this.classList.add('active')
+                }
+            }
+            linkColor.forEach(l => l.addEventListener('click', colorLink))
+
+            // Your code to run since DOM is loaded and ready
+        });
+    </script>
+
+    <nav>
+        <ul>
+            <a href="/">
+                <img class="logo" alt="drawing" src=".\img\logo3.png">
+            </a>
+            <hr class="souslogo">
+            <li><a href="/"><i class="fa fa-home"></i>&nbsp; Home</a></li>
+            <li><a href="/projets"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp; Projets</a></li>
+            <li><a href="" class=" activealways "><i class="fa fa-folder-open"></i>&nbsp; Rapport:</a></li>
+            <li><a href="#" class=" nav_link active sous ">&nbsp;&nbsp;<i class="fa fa-file-text"
+                        aria-hidden="true"></i>&nbsp;&nbsp;Quotidien</a>
+            </li>
+            <li><a href="#week" class=" nav_link sous">&nbsp;&nbsp;<i class="fa fa-file-text"
+                        aria-hidden="true"></i>&nbsp;&nbsp;Hebdomadaire</a>
+            </li>
+            <li><a href="#month" class=" nav_link sous ">&nbsp;&nbsp;<i class="fa fa-file-text"
+                        aria-hidden="true"></i>&nbsp;&nbsp;Mensuel</a>
+            </li>
+            <li><a href="#year" class=" nav_link sous">&nbsp;&nbsp;<i class="fa fa-file-text"
+                        aria-hidden="true"></i>&nbsp;&nbsp;Annuel</a>
+            </li>
+            <br><br><br><br><br><br><br>
+            <div class="souslogo">
+                <img class="imgsouslogo" width="90%" src="./img/souslogo.png">
+            </div>
+        </ul>
+    </nav>
+
+    <button class="telecharger" onclick="downloadTableAsPDF()"><i class="fa fa-download"></i>Exporter</button>
+
+    <script>
+        function downloadTableAsPDF() {
+            const options = {
+                margin: 1,
+                filename: 'rapport.pdf',
+                image: { type: 'png', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            const title = "Rapport général";
+            const iconSrc = "./img/logo.png"; // Replace with the path to your image
+            const element = document.getElementById('content');
+
+            html2pdf().from(element).set(options).toPdf().get('pdf').then(function (pdf) {
+                // Add title
+                pdf.setFontSize(18);
+                pdf.setFont("times");
+                pdf.text(title, 10, 20);
+
+                // Add image
+                pdf.addImage(iconSrc, 'PNG', 10, 30, 30, 30); // Adjust dimensions and position as needed
+
+                // Add page numbering
+                const pageCount = pdf.internal.getNumberOfPages();
+                for (let i = 1; i <= pageCount; i++) {
+                    pdf.setPage(i);
+                    pdf.setFontSize(10);
+                    pdf.text('Page ' + i + ' / ' + pageCount, pdf.internal.pageSize.getWidth() - 20, pdf.internal.pageSize.getHeight() - 10);
+                }
+
+                pdf.save();
+            });
+        }
+    </script>
+
+    <div class="wrapper">
+        <div class="section" id="content">
+            <div class="box-area">
+                <img class="logo4" alt="drawing" src=".\img\logo4.png">
+                <h1 class="titre">Rapport d'Analyse Récapitulatif</h1>
+                {{#each urls}}
+                <h6 class="url"><strong>{{titre}}:</strong> {{url}}</h6>
+                {{/each}}
+                <h1 class="dailytitre">Rapport d'Analyse Quotidien</h1>
+                <h5 class="date">{{ today }}</h5><br>
+                <table>
+                    <tr>
+                        <td class="rightbr">Utilisateurs</td>
+                        <td class="rightbr">Pages Visitées</td>
+                        <td class="rightbr">Sessions</td>
+                        <td>Durée Totale de Sessions</td>
+                    </tr>
+                    <tr>
+                        <td class="rightbr">
+                            <h1 class="number"><b>{{nombreUserAgentsAujourdhui}}</b></h1>
+                        </td>
+                        <td class="rightbr">
+                            <h1 class="number"><b>{{nombrePagesVisiteesAujourdhui}}</b></h1>
+                        </td>
+                        <td class="rightbr">
+                            <h1 class="number"><b>{{ nombreVisiteursAujourdhui }}</b></h1>
+                        </td>
+                        <td>
+                            <h1 class="number"><b>{{ totalDurationAujourdhui }}</b></h1>
+                        </td>
+                    </tr>
+                </table><br>
+                <table class="table2">
+                    <tr>
+                        <td>Nombre Total de Clics</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h1 class="number"><b>{{ nombreClicksAujourdhui }}</b></h1>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="tabledef">
+                    <tr class="trdef1">
+                        <h3>Comparaison Quotidienne</h3>
+                    </tr>
+                    <tr class="trdef1">
+                        <td class="tddef1"></td>
+                        <td class="tddef">Utilisateurs</td>
+                        <td class="tddef">Pages Visitées</td>
+                        <td class="tddef">Sessions</td>
+                        <td class="tddef">Durée Totale de Sessions</td>
+                        <td class="tddef">Nombre Total de Clics</td>
+                    </tr>
+                    <tr class="trdef2">
+                        <td class="tddef1">&nbsp;&nbsp;{{yesterday}}</td>
+                        <td class="tddef"> {{ nombreUserAgentsJourPrecedent}} </td>
+                        <td class="tddef"> {{nombrePagesVisiteesJourPrecedent}} </td>
+                        <td class="tddef"> {{ nombreVisiteursJourPrecedent }} </td>
+                        <td class="tddef"> {{ totalDurationJourPrecedent }} </td>
+                        <td class="tddef"> {{ nombreClicksJourPrecedent }} </td>
+                    </tr>
+                    <tr class="trdef3">
+                        <td class="tddef1">&nbsp;&nbsp;{{ today }}</td>
+                        <td class="tddef"> {{nombreUserAgentsAujourdhui}} </td>
+                        <td class="tddef"> {{nombrePagesVisiteesAujourdhui}} </td>
+                        <td class="tddef"> {{ nombreVisiteursAujourdhui }} </td>
+                        <td class="tddef"> {{ totalDurationAujourdhui }} </td>
+                        <td class="tddef"> {{ nombreClicksAujourdhui }} </td>
+                    </tr>
+                    <tr class="trdef4">
+                        <td class="tddef1"></td>
+                        <td class="tddef"><b id="msg">{{messageUserAgentsJour}}</b>
+                        </td>
+                        <td class="tddef"><b id="msg">{{messagePagesVisiteesJour}}</b>
+                        </td>
+                        <td class="tddef"><b id="msg">{{messageVisiteursJour}}</b>
+                        </td>
+                        <td class="tddef"><b id="msg">{{messageDurationJour}}</b></td>
+                        <td class="tddef"><b id="msg">{{messageClicksJour}}</b></td>
+                    </tr>
+                    <tr class="trdef4">
+                        <td class="tddef1"></td>
+                        <td class="tddef">{{differenceAbsolueUserAgentsJour}}</b>
+                        </td>
+                        <td class="tddef">{{differenceAbsoluePagesVisiteesJour}} </b>
+                        </td>
+                        <td class="tddef">{{differenceAbsolueVisiteursJour}} </b>
+                        </td>
+                        <td class="tddef">{{differenceAbsolueDurationJour}} </b></td>
+                        <td class="tddef">{{differenceAbsolueClicksJour}} </b></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br><br><br id="week"><br><br>
+
+    <button class="telecharger" onclick="downloadTableAsPDF1()"><i class="fa fa-download"></i>Exporter</button>
+
+    <script>
+        function downloadTableAsPDF1() {
+            const options = {
+                margin: 1,
+                filename: 'rapport.pdf',
+                image: { type: 'png', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            const title = "Rapport général";
+            const iconSrc = "./img/logo.png"; // Replace with the path to your image
+            const element = document.getElementById('content1');
+
+            html2pdf().from(element).set(options).toPdf().get('pdf').then(function (pdf) {
+                // Add title
+                pdf.setFontSize(18);
+                pdf.setFont("times");
+                pdf.text(title, 10, 20);
+
+                // Add image
+                pdf.addImage(iconSrc, 'PNG', 10, 30, 30, 30); // Adjust dimensions and position as needed
+
+                // Add page numbering
+                const pageCount = pdf.internal.getNumberOfPages();
+                for (let i = 1; i <= pageCount; i++) {
+                    pdf.setPage(i);
+                    pdf.setFontSize(10);
+                    pdf.text('Page ' + i + ' / ' + pageCount, pdf.internal.pageSize.getWidth() - 20, pdf.internal.pageSize.getHeight() - 10);
+                }
+
+                pdf.save();
+            });
+        }
+    </script>
+    <div class="wrapper">
+        <div class="section" id="content1">
+            <div class="box-area">
+                <h1 class="dailytitre">Rapport d'Analyse Hebdomadaire</h1>
+                <h5 class="date">{{ startOfWeek }} | {{ endOfWeek }}</h5><br>
+                <table>
+                    <tr>
+                        <td class="rightbr">Utilisateurs</td>
+                        <td class="rightbr">Pages Visitées</td>
+                        <td class="rightbr">Sessions</td>
+                        <td>Durée Totale de Sessions</td>
+                    </tr>
+                    <tr>
+                        <td class="rightbr">
+                            <h1 class="number"><b>{{nombreUserAgentsSemaine}}</b></h1>
+                        </td>
+                        <td class="rightbr">
+                            <h1 class="number"><b>{{nombrePagesVisiteesSemaine}}</b></h1>
+                        </td>
+                        <td class="rightbr">
+                            <h1 class="number"><b>{{ nombreVisiteursSemaine }}</b></h1>
+                        </td>
+                        <td>
+                            <h1 class="number"><b>{{ totalDurationSemaine }}</b></h1>
+                        </td>
+                    </tr>
+                </table><br>
+                <table class="table2">
+                    <tr>
+                        <td>Nombre Total de Clics</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h1 class="number"><b>{{nombreClicksSemaine}}</b></h1>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="tabledef">
+                    <tr class="trdef1">
+                        <h3>Comparaison Hebdomadaire</h3>
+                    </tr>
+                    <tr class="trdef1">
+                        <td class="tddef1"></td>
+                        <td class="tddef">Utilisateurs</td>
+                        <td class="tddef">Pages Visitées</td>
+                        <td class="tddef">Sessions</td>
+                        <td class="tddef">Durée Totale de Sessions</td>
+                        <td class="tddef">Nombre Total de Clics</td>
+                    </tr>
+                    <tr class="trdef2">
+                        <td class="tddef1">&nbsp;&nbsp;{{yesterday}}</td>
+                        <td class="tddef"> {{nombreUserAgentsSemainePrecedente}} </td>
+                        <td class="tddef"> {{nombrePagesVisiteesSemainePrecedente}} </td>
+                        <td class="tddef"> {{ nombreVisiteursSemainePrecedente }} </td>
+                        <td class="tddef"> {{ totalDurationSemainePrecedente }} </td>
+                        <td class="tddef"> {{ nombreClicksSemainePrecedente }} </td>
+                    </tr>
+                    <tr class="trdef3">
+                        <td class="tddef1">&nbsp;&nbsp;{{ today }}</td>
+                        <td class="tddef"> {{nombreUserAgentsSemaine}} </td>
+                        <td class="tddef"> {{nombrePagesVisiteesSemaine}} </td>
+                        <td class="tddef"> {{nombreVisiteursSemaine}} </td>
+                        <td class="tddef"> {{ totalDurationSemaine }} </td>
+                        <td class="tddef"> {{nombreClicksSemaine}} </td>
+                    </tr>
+                    <tr class="trdef4">
+                        <td class="tddef1"></td>
+                        <td class="tddef"><b id="msg">{{messageUserAgentsSemaine}}</b>
+                        </td>
+                        <td class="tddef"><b id="msg">{{messagePagesVisiteesSemaine}}</b>
+                        <td class="tddef"><b id="msg">{{messageVisiteursSemaine}}</b>
+                        </td>
+                        </td>
+                        <td class="tddef"><b id="msg">{{messageDurationSemaine}}</b> </td>
+                        <td class="tddef"><b id="msg">{{messageClicksSemaine}}</b></td>
+                    </tr>
+                    <tr class="trdef4">
+                        <td class="tddef1"></td>
+                        <td class="tddef">{{differenceAbsolueUserAgentsSemaine}}
+                        </td>
+                        <td class="tddef">{{differenceAbsoluePagesVisiteesSemaine}}
+                        <td class="tddef">{{differenceAbsolueVisiteursSemaine}}
+                        </td>
+                        </td>
+                        <td class="tddef">{{differenceAbsolueDurationAnnee}}
+                        </td>
+                        <td class="tddef">{{differenceAbsolueClicksSemaine}} </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <br><br><br><br><br><br><br><br><br id="month"><br>
+    <button class="telecharger" onclick="downloadTableAsPDF2()"><i class="fa fa-download"></i>Exporter</button>
+
+    <script>
+        function downloadTableAsPDF2() {
+            const options = {
+                margin: 1,
+                filename: 'rapport.pdf',
+                image: { type: 'png', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            const title = "Rapport général";
+            const iconSrc = "./img/logo.png"; // Replace with the path to your image
+            const element = document.getElementById('content2');
+
+            html2pdf().from(element).set(options).toPdf().get('pdf').then(function (pdf) {
+                // Add title
+                pdf.setFontSize(18);
+                pdf.setFont("times");
+                pdf.text(title, 10, 20);
+
+                // Add image
+                pdf.addImage(iconSrc, 'PNG', 10, 30, 30, 30); // Adjust dimensions and position as needed
+
+                // Add page numbering
+                const pageCount = pdf.internal.getNumberOfPages();
+                for (let i = 1; i <= pageCount; i++) {
+                    pdf.setPage(i);
+                    pdf.setFontSize(10);
+                    pdf.text('Page ' + i + ' / ' + pageCount, pdf.internal.pageSize.getWidth() - 20, pdf.internal.pageSize.getHeight() - 10);
+                }
+
+                pdf.save();
+            });
+        }
+    </script>
+    <div class="wrapper">
+        <div class="section" id="content2">
+            <div class="box-area">
+                <h1 class="dailytitre">Rapport d'Analyse Mensuel</h1>
+                <h5 class="date">{{ startOfMonth }} | {{ endOfMonth }}</h5><br>
+                <table>
+                    <tr>
+                        <td class="rightbr">Utilisateurs</td>
+                        <td class="rightbr">Pages Visitées</td>
+                        <td class="rightbr">Sessions</td>
+                        <td>Durée Totale de Sessions</td>
+                    </tr>
+                    <tr>
+                        <td class="rightbr">
+                            <h1 class="number"><b>{{nombreUserAgentsMois}}</b></h1>
+                        </td>
+                        <td class="rightbr">
+                            <h1 class="number"><b>{{nombrePagesVisiteesCeMois}}</b></h1>
+                        </td>
+                        <td class="rightbr">
+                            <h1 class="number"><b>{{ nombreVisiteursCeMois }}</b></h1>
+                        </td>
+                        <td>
+                            <h1 class="number"><b>{{ totalDurationCeMois }}</b></h1>
+                        </td>
+                    </tr>
+                </table><br>
+                <table class="table2">
+                    <tr>
+                        <td>Nombre Total de Clics</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h1 class="number"><b>{{ nombreClicksCeMois }}</b></h1>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="tabledef" id="month">
+                    <tr class="trdef1">
+                        <h3>Comparaison Mensuelle</h3>
+                    </tr>
+                    <tr class="trdef1">
+                        <td class="tddef1"></td>
+                        <td class="tddef">Utilisateurs</td>
+                        <td class="tddef">Pages Visitées</td>
+                        <td class="tddef">Sessions</td>
+                        <td class="tddef">Durée Totale de Sessions</td>
+                        <td class="tddef">Nombre Total de Clics</td>
+                    </tr>
+                    <tr class="trdef2">
+                        <td class="tddef1">&nbsp;&nbsp;{{startOfLastMonth}} | <br>
+                            &nbsp;&nbsp;{{endOfLastMonth}}</td>
+                        <td class="tddef"> {{nombreUserAgentsMoisPrecedent}} </td>
+                        <td class="tddef"> {{nombrePagesVisiteesMoisPrecedent}} </td>
+                        <td class="tddef"> {{ nombreVisiteursMoisPrecedent }} </td>
+                        <td class="tddef"> {{ totalDurationMoisPrecedent }} </td>
+                        <td class="tddef"> {{ nombreClicksMoisPrecedent }} </td>
+                    </tr>
+                    <tr class="trdef3">
+                        <td class="tddef1">&nbsp;&nbsp;{{ startOfMonth }} | <br>
+                            &nbsp;&nbsp;{{ endOfMonth }}</td>
+                        <td class="tddef"> {{nombreUserAgentsMois}} </td>
+                        <td class="tddef"> {{nombrePagesVisiteesCeMois}} </td>
+                        <td class="tddef"> {{nombreVisiteursCeMois}} </td>
+                        <td class="tddef"> {{ totalDurationCeMois}} </td>
+                        <td class="tddef"> {{ nombreClicksCeMois }} </td>
+                    </tr>
+                    <tr class="trdef4">
+                        <td class="tddef1"></td>
+                        <td class="tddef"><b id="msg">{{messageUserAgentsMois}}</b></td>
+                        <td class="tddef"><b id="msg">{{messagePagesVisiteesMois}}</b></td>
+                        <td class="tddef"><b id="msg">{{messageVisiteursMois}}</b></td>
+                        <td class="tddef"><b id="msg">{{messageDurationMois}}</b></td>
+                        <td class="tddef"><b id="msg">{{messageClicksMois}}</b></td>
+                    </tr>
+                    <tr class="trdef4">
+                        <td class="tddef1"></td>
+                        <td class="tddef">{{differenceAbsolueUserAgentsMois}}</td>
+                        <td class="tddef">{{differenceAbsoluePagesVisiteesMois}} </td>
+                        <td class="tddef">{{differenceAbsolueVisiteursMois}} </td>
+                        <td class="tddef">{{differenceAbsolueDurationMois}} </td>
+                        <td class="tddef">{{differenceAbsolueClicksMois}}</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <br><br><br><br><br><br><br id="year"><br>
+    <button class="telecharger" onclick="downloadTableAsPDF3()"><i class="fa fa-download"></i>Exporter</button>
+
+    <script>
+        function downloadTableAsPDF3() {
+            const options = {
+                margin: 1,
+                filename: 'rapport.pdf',
+                image: { type: 'png', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            const title = "Rapport général";
+            const iconSrc = "./img/logo.png"; // Replace with the path to your image
+            const element = document.getElementById('content3');
+
+            html2pdf().from(element).set(options).toPdf().get('pdf').then(function (pdf) {
+                // Add title
+                pdf.setFontSize(18);
+                pdf.setFont("times");
+                pdf.text(title, 10, 20);
+
+                // Add image
+                pdf.addImage(iconSrc, 'PNG', 10, 30, 30, 30); // Adjust dimensions and position as needed
+
+                // Add page numbering
+                const pageCount = pdf.internal.getNumberOfPages();
+                for (let i = 1; i <= pageCount; i++) {
+                    pdf.setPage(i);
+                    pdf.setFontSize(10);
+                    pdf.text('Page ' + i + ' / ' + pageCount, pdf.internal.pageSize.getWidth() - 20, pdf.internal.pageSize.getHeight() - 10);
+                }
+
+                pdf.save();
+            });
+        }
+    </script>
+    <div class="wrapper">
+        <div class="section" id="content3">
+            <div class="box-area">
+                <h1 class="dailytitre">Rapport d'Analyse Annuel</h1>
+                <h5 class="date">{{ startOfYear }} | {{ endOfYear }}</h5><br>
+                <table>
+                    <tr>
+                        <td class="rightbr">Utilisateurs</td>
+                        <td class="rightbr">Pages Visitées</td>
+                        <td class="rightbr">Sessions</td>
+                        <td>Durée Totale de Sessions</td>
+                    </tr>
+                    <tr>
+                        <td class="rightbr">
+                            <h1 class="number"><b>{{nombreUserAgentsAnnee}}</b></h1>
+                        </td>
+                        <td class="rightbr">
+                            <h1 class="number"><b>{{nombrePagesVisiteesAnnee}}</b></h1>
+                        </td>
+                        <td class="rightbr">
+                            <h1 class="number"><b>{{ nombreVisiteursAnnee }}</b></h1>
+                        </td>
+                        <td>
+                            <h1 class="number"><b>{{ totalDurationAnnee }}</b></h1>
+                        </td>
+                    </tr>
+                </table><br>
+                <table class="table2">
+                    <tr>
+                        <td>Nombre Total de Clics</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h1 class="number"><b>{{ nombreClicksAnnee }}</b></h1>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="tabledef">
+                    <tr class="trdef1">
+                        <h3>Comparaison Annuelle</h3>
+                    </tr>
+                    <tr class="trdef1">
+                        <td class="tddef1"></td>
+                        <td class="tddef">Utilisateurs</td>
+                        <td class="tddef">Pages Visitées</td>
+                        <td class="tddef">Sessions</td>
+                        <td class="tddef">Durée Totale de Sessions</td>
+                        <td class="tddef">Nombre Total de Clics</td>
+                    </tr>
+                    <tr class="trdef2">
+                        <td class="tddef1">&nbsp;&nbsp;{{startOfLastYear}} | <br>
+                            &nbsp;&nbsp;{{endOfLastYear}}</td>
+                        <td class="tddef"> {{ nombreUserAgentsAnneePrecedente}} </td>
+                        <td class="tddef"> {{nombrePagesVisiteesAnneePrecedente}} </td>
+                        <td class="tddef"> {{ nombreVisiteursAnneePrecedente }} </td>
+                        <td class="tddef"> {{ totalDurationAnneePrecedente }} </td>
+                        <td class="tddef"> {{ nombreClicksAnneePrecedente }} </td>
+                    </tr>
+                    <tr class="trdef3">
+                        <td class="tddef1">&nbsp;&nbsp;{{ startOfYear }} | <br>
+                            &nbsp;&nbsp;{{ endOfYear }}</td>
+                        <td class="tddef"> {{nombreUserAgentsAnnee}} </td>
+                        <td class="tddef"> {{nombrePagesVisiteesAnnee}} </td>
+                        <td class="tddef"> {{ nombreVisiteursAnnee }} </td>
+                        <td class="tddef"> {{ totalDurationAnnee }} </td>
+                        <td class="tddef">{{ nombreClicksAnnee }}</td>
+                    </tr>
+                    <tr class="trdef4">
+                        <td class="tddef1"></td>
+                        <td class="tddef"><b id="msg">{{messageUserAgentsAnnee}}</b></td>
+                        <td class="tddef"><b id="msg">{{messagePagesVisiteesAnnee}}</b>
+                        </td>
+                        <td class="tddef"><b id="msg">{{messageVisiteursAnnee}}</td>
+                        <td class="tddef"><b id="msg">{{messageDurationAnnee}}</td>
+                        <td class="tddef"><b id="msg">{{messageClicksAnnee}}</td>
+                    </tr>
+                    <tr class="trdef4">
+                        <td class="tddef1"></td>
+                        <td class="tddef">{{differenceAbsolueUserAgentsAnnee}}</td>
+                        <td class="tddef">{{differenceAbsoluePagesVisiteesAnnee}}</td>
+                        <td class="tddef">{{differenceAbsolueVisiteursAnnee}} </td>
+                        <td class="tddef">{{differenceAbsolueDurationAnnee}} </td>
+                        <td class="tddef">{{differenceAbsolueClicksAnnee}}</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <br><br><br><br>
+</body>
+
+
+</html>

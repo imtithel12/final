@@ -413,6 +413,10 @@
             margin-right: 5px;
         }
 
+        .iconback {
+            color: black;
+        }
+
         /////////////////////////////////////////////////////////////////////////////////////
     </style>
 
@@ -438,6 +442,7 @@
                 </li>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
+
                 <li class="nav-item">
                     <div class="dropdown">
                         <div class="profile">
@@ -447,7 +452,7 @@
                                     <li>
                                         <i class='bx bx-user'></i>
                                         <span>
-                                            <form action="/projets" method="GET">
+                                            <form action="/projets" method="Get">
                                                 <button class="nav-link fw-bold py-1 px-0 btn p=3 text-white"
                                                     type="submit">Projets</button>
 
@@ -467,7 +472,7 @@
                                     <li>
                                         <i class='bx bx-cog'></i>
                                         <span>
-                                            <form action="/logout" method="POST">
+                                            <form action="/logout" method="Get">
                                                 <button class="nav-link fw-bold py-1 px-0 btn p=3 text-white"
                                                     type="submit">Help</button>
 
@@ -494,6 +499,8 @@
     </nav>
 
     <div class="desc py-4 align-items-center">
+        <a href="/profile">Profile</a> <i class="fa fa-backward iconback" aria-hidden="true"></i><b> Editer
+            Profil</b>
         <div class="page-content page-container justify-content-center" id="page-content">
             <div class="padding">
                 <div class="row">
@@ -504,7 +511,8 @@
                                 <div>
                                     <form action="/updateProfile" method="POST">
                                         <h5><b>Espace de profile</b></h5>
-                                        <div class="item-except text-muted text-sm ">Gérer vos paramètre de compte</div>
+                                        <div class="item-except text-muted text-sm ">Gérer vos paramètre de compte
+                                        </div>
                                         <br>
 
                                         <a href="#">
@@ -523,7 +531,7 @@
                                             </div><br>
                                         </a>
 
-                                        <a href="">
+                                        <a href="/updateprofileurls">
 
                                             <div class="item-except text-muted text-sm ">
                                                 <i class="fa fa-list" id="icon"></i>

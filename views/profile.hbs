@@ -367,11 +367,26 @@
             font: italic small-caps bold 16px/2 cursive;
         }
 
-        #urltitre:hover {
-            color: #DA70D6;
+        table:hover {
+            background-color: #f7c2f6;
         }
 
-        /////////////////////////////////////////////////////////////////////////////////////
+        .desc {
+            float: left;
+        }
+
+        .urlsblocks {
+            float: left;
+            margin-top: 11.5%;
+            margin-left: 10%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-radius: 5px;
+            border: 1px solid rgb(218, 218, 218);
+        }
     </style>
 
 </head>
@@ -479,8 +494,7 @@
                                         <a href="/updateProfile" data-abc="true">
                                             <button type="submit" class="edit">
                                                 <i class="fa fa-pencil-square-o fa-pencil" aria-hidden="true"></i>
-                                                Edit
-                                                profile
+                                                Editer Profil
                                             </button>
                                         </a>
                                     </div>
@@ -494,35 +508,17 @@
 
     </div>
 
-    <div id="urlsblock">
-        <div class="desc py-4 align-items-center">
-            <div class="page-content page-container justify-content-center" id="page-content">
-                <div class="padding">
-                    <div class="row">
-                        <div>
-                            <p id="liste">Liste des projets</p>
-                            <a href="/updateProfile">
-                                {{#each urls}}
-                                <div class="list list-row block">
-                                    <div class="list-item list-group-item d-flex justify-content-between align-content-center"
-                                        data-id="7">
-                                        <div>
-                                            <div id="urltitre">
-                                                {{url}}
-                                            </div>
-                                            <div class="item-date text-muted text-sm d-none d-md-block">
-                                                {{created_at}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div><br>
-                                {{/each}}
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="urlsblocks">
+        {{#each urls}}
+        <table>
+            <tr>
+                <td id="urltitre">{{url}}</td>
+            </tr>
+            <tr>
+                <td>{{created_at}}</td>
+            </tr>
+        </table><br>
+        {{/each}}
     </div>
 </body>
 

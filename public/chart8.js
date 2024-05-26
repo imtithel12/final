@@ -1,47 +1,54 @@
-fetch('/chart8')
-    .then(response => response.json())
-    .then(data => {
-        const labels = data.map(item => item.day_of_week);
-        const interactions = data.map(item => item.total_interactions);
+function fetchChart8Data() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const trackingId = urlParams.get('trackingId');
 
-        const ctx = document.getElementById('chart8').getContext('2d');
-        const myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Nombre total d\'interactions',
-                    data: interactions,
-                    backgroundColor: 'rgba(75, 192, 192, 0.5)', // Couleur de fond
-                    borderColor: 'rgba(75, 192, 192, 1)', // Couleur de bordure
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Nombre total d\'interactions par jour de la semaine', // Titre du graphique
-                        font: {
-                            size: 16 // Taille de la police du titre
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Nombre d\'interactions' // Titre de l'axe Y
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Jour de la semaine' // Titre de l'axe X
-                        }
-                    }
-                }
+    if (!trackingId) {
+        console.error('Aucun tracking_id trouvé dans l\'URL.');
+        return;
+    }
+
+    fetch(`/chart7?trackingId=${trackingId}`)
+        .then(response => response.json())
+        .then(data => {
+            const table = document.createElement('table');
+            table.classList.add('data-table');
+
+            // En-tête du tableau
+            const headerRow = table.insertRow();
+            const headers = ['Heure', 'Sessions', 'Durée (seconde)'];
+            headers.forEach(headerText => {
+                const th = document.createElement('th');
+                th.textContent = headerText;
+                headerRow.appendChild(th);
+            });
+
+            // Remplissage des données
+            for (let i = 0; i < data.length; i++) {
+                const rowData = data[i];
+                const row = table.insertRow();
+
+                const hour = rowData.hour;
+                const formattedHour = ("0" + hour).slice(-2);
+                const timeCell = row.insertCell();
+                timeCell.textContent = `${formattedHour}:00`;
+
+                const visitsCell = row.insertCell();
+                visitsCell.textContent = rowData.count;
+
+                const durationCell = row.insertCell();
+                durationCell.textContent = rowData.duration_in_seconds;
             }
+
+            // Ajout du tableau à l'élément avec l'id 'table-container'
+            const tableContainer = document.getElementById('table-container');
+            tableContainer.innerHTML = '';
+            tableContainer.appendChild(table);
+        })
+        .catch(error => {
+            console.error('Une erreur s\'est produite:', error);
         });
-    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetchChart8Data();
+});

@@ -171,10 +171,40 @@
             /* Coins arrondis */
         }
 
-        #erreur {
-            color: #f541ef;
-            font-size: x-large;
+        .alert-box {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 600px;
+            background-color: rgb(240, 238, 238);
+            border: 0.5px solid rgb(179, 178, 178);
+            /* Couleur de fond de l'alerte */
+            color: rgb(228, 4, 4);
+            text-align: center;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+            border-radius: 5px;
+            z-index: 1000;
+            display: none;
+            /* Masqué par défaut */
+        }
 
+        .alert-box button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #ffd900;
+            color: rgb(8, 8, 8);
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .alert-box button:hover {
+            background-color: #ffbb00;
+            color: rgb(8, 8, 8);
         }
     </style>
 
@@ -201,7 +231,32 @@
                     </p>
                     <p class="text-center signintext"><a class="email" href="">Ou utilisez votre compte Email</a></p>
 
-                    <p id="erreur"><b>{{ message }}</b></p>
+                    <div id="alertBox" class="alert-box">
+                        <span id="alertMessage"></span>
+                        <button onclick="hideAlert()">Fermer</button>
+                    </div>
+
+                    <script>
+                        function showAlert(message) {
+                            var alertBox = document.getElementById('alertBox');
+                            var alertMessage = document.getElementById('alertMessage');
+                            alertMessage.textContent = message;
+                            alertBox.style.display = 'block';
+                        }
+
+                        function hideAlert() {
+                            var alertBox = document.getElementById('alertBox');
+                            alertBox.style.display = 'none';
+                        }
+
+                        // Exemple d'utilisation
+                        var message = "{{{message}}}";
+                        if (message) {
+                            showAlert(message);
+                        }
+                    </script>
+
+
                     <input type="email" class="form-control mb-4" placeholder="&#xf0e0; Email"
                         style="font-family:Arial, FontAwesome" name="email" required>
                     <input type="password" class="form-control mb-4" placeholder="&#xf023;  Mot de passe"
